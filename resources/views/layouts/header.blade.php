@@ -52,8 +52,8 @@
                     @endauth
 
                     @guest
-                        <a href="" class="btn btn-outline-light btn-sm px-3 rounded-2">Вход</a>
-                        <a href="" class="btn btn-primary btn-sm px-3 rounded-2 shadow-sm">Регистрация</a>
+                        <button class="btn btn-outline-light btn-sm px-3 rounded-2" data-bs-toggle="modal" data-bs-target="#AuthorizationModal">Вход</button>
+                        <button class="btn btn-primary btn-sm px-3 rounded-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#RegModal">Регистрация</button>
                     @endguest
                 </div>
             </div>

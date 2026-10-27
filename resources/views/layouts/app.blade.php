@@ -44,9 +44,20 @@
 
 <body>
     @include("layouts.header")
+    @guest
+        @include('layouts.modal')
+    @endguest
     @yield('content')
     @include("layouts.footer")
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.3.3.js"></script>
+    <script src="js/jquery.maskedinput.min.js"></script>
+    <script src="js/modal.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#phone").mask("+7 (999) 999-99-99");
+        });
+    </script>
 </body>
 
 </html>

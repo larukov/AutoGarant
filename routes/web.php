@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CatalogController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +21,12 @@ Route::get('/', [HomeController::class, "index"]);
 
 Route::get("catalog", [CatalogController::class,"index"])->name("catalog.index");
 
-Route::get("catalog/show", function () {
-    return view('home');
-})->name("catalog.show");
+Route::get("catalog/show/{id}", [CatalogController::class, "show"])->name("catalog.show");
 
+Route::post('/', [RegisterController::class, "store"])->name("register");
+Route::post('/login', [LoginController::class, 'store'])->name('login');
+Route::get('/logout', function() {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
 // Route::get("/",[LoginController::class, "index"])->name("login");
