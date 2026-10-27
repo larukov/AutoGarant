@@ -180,5 +180,48 @@
 <div class="modal fade" id="orderReservationModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="orderModalLabel">Онлайн-резервирование</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('orders.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="car_id" value="{{ $car->id }}">
+                
+                <div class="modal-body">
+                    <p class="text-muted small mb-3">
+                        Вы резервируете автомобиль <strong>{{ $car->model->brand->name }} {{ $car->model->name }}</strong> со склада автосалона.
+                    </p>
+                    
+                    <div class="mb-3">
+                        <label for="payment_type" class="form-label small fw-bold text-secondary">Способ оплаты</label>
+                        <select class="form-select" id="payment_type" name="payment_type" required>
+                            <option value="cash">Наличный расчет в автосалоне</option>
+                            <option value="card">Банковская карта</option>
+                            <option value="credit">Оформление в автокредит</option>
+                        </select>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mb-2">
+                        <div class="d-flex justify-content-between mb-1 small text-muted">
+                            <span>Имя клиента:</span>
+                            <span class="text-dark fw-semibold">{{ Auth::user()->name }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>Телефон для связи:</span>
+                            <span class="text-dark fw-semibold">{{ Auth::user()->phone }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary fw-bold">Подтвердить резерв</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endauth
+
 @endsection
