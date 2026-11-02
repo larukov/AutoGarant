@@ -17,7 +17,7 @@
                 <div class="card border-0 shadow-sm rounded-3 p-4 bg-primary text-white">
                     <span class="text-uppercase small fw-bold d-block mb-1" style="opacity: 0.8;">Выручка по закрытым
                         сделкам</span>
-                    <h3 class="display-6 fw-bold mb-0">{{ number_format($totalSales, 0, ',', ' ') }} ₽</h3>
+                    <h3 class="display-6 fw-bold mb-0"><x-money :money="$totalSales" /></h3>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
@@ -34,10 +34,7 @@
             <h3 class="fw-bold text-dark h4 mb-4 border-bottom pb-2">Все поступающие заявки и статусы сделок</h3>
 
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <x-alert class="mb-4" />
             @endif
 
             <div class="table-responsive">
@@ -73,8 +70,7 @@
                                 <td>
                                     <span class="fw-bold text-dark d-block">{{ $order->car->model->brand->name }}
                                         {{ $order->car->model->name }}</span>
-                                    <small class="text-primary fw-medium">{{ number_format($order->final_price, 0, ',', ' ') }}
-                                        ₽</small>
+                                    <small class="text-primary fw-medium"><x-money :money="$order->final_price" /></small>
                                 </td>
 
                                 <!-- Тип оплаты -->

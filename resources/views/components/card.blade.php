@@ -7,11 +7,8 @@
             alt="{{ $car->model->brand->name }} {{ $car->model->name }}" class="w-100 h-100 object-cover">
 
         <!-- Статус автомобиля (из ENUM поля 'status' в таблице cars) -->
-        <span class="position-absolute top-0 start-0 m-3 badge font-weight-bold py-2 px-3 
-            @if($car->status === 'available') bg-success 
-            @elseif($car->status === 'reserved') bg-warning text-dark 
-            @else bg-danger @endif">
-            {{ $car->status === 'available' ? 'В наличии' : ($car->status === 'reserved' ? 'Забронирован' : 'Продан') }}
+        <span class="position-absolute top-0 start-0 m-3">
+            <x-car-status :car="$car" />
         </span>
     </div>
 
@@ -26,18 +23,9 @@
             <!-- Краткие тех-характеристики из полей таблицы cars -->
             <div class="row g-2 pt-2 pb-3 my-2 border-top border-bottom text-secondary small">
                 <div class="col-6">Объем: <strong>{{ number_format($car->engine_volume, 1) }} л</strong></div>
-                <div class="col-6">КПП: <strong>
-                        @if($car->transmission === 'manual') Механика
-                        @elseif($car->transmission === 'automatic') Автомат
-                        @else Робот @endif
-                    </strong></div>
+                <div class="col-6">КПП: <strong><x-spec-text field="transmission" :value="$car->transmission" short /></strong></div>
                 <div class="col-6">Привод: <strong>{{ $car->drive_type }}</strong></div>
-                <div class="col-6">Топливо: <strong>
-                        @if($car->fuel_type === 'petrol') Бензин
-                        @elseif($car->fuel_type === 'diesel') Дизель
-                        @elseif($car->fuel_type === 'electric') Электро
-                        @else Гибрид @endif
-                    </strong></div>
+                <div class="col-6">Топливо: <strong><x-spec-text field="fuel_type" :value="$car->fuel_type" /></strong></div>
             </div>
         </div>
 
@@ -46,7 +34,7 @@
             <div class="d-flex flex-column">
                 <span class="text-muted text-uppercase small"
                     style="font-size: 0.7rem;">Стоимость</span>
-                <span class="fs-5 fw-bold text-dark">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
+                <span class="fs-5 fw-bold text-dark"><x-money :money="$car->price" /></span>
             </div>
             <a href="{{ route('catalog.show', $car->id) }}" class="btn btn-dark btn-sm rounded-2 px-3 py-2 fw-semibold">
                 Подробнее

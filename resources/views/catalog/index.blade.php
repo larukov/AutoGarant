@@ -38,29 +38,20 @@
 
                         <!-- Фильтр по Типу кузова -->
                         <div class="mb-3">
-                            <label for="body_type" class="form-label small fw-bold text-secondary">Тип кузова</label>
-                            <select class="form-select form-select-sm" id="body_type" name="body_type_id">
-                                <option value="">Все типы</option>
-                                @foreach($bodyTypes as $type)
-                                    <option value="{{ $type->id }}" {{ request('body_type_id') == $type->id ? 'selected' : '' }}>
-                                        {{ $type->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <x-ui.select name="body_type_id" label="Тип кузова" id="body_type"
+                                :options="$bodyTypes->pluck('name', 'id')"
+                                :value="request('body_type_id')" placeholder="Все типы"
+                                labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
                         <div class="mb-3">
-                            <label for="transmission" class="form-label small fw-bold text-secondary">Коробка
-                                передач</label>
-                            <select class="form-select form-select-sm" id="transmission" name="transmission">
-                                <option value="">Любая КПП</option>
-                                <option value="manual" {{ request('transmission') == 'manual' ? 'selected' : '' }}>Механика
-                                </option>
-                                <option value="automatic" {{ request('transmission') == 'automatic' ? 'selected' : '' }}>
-                                    Автомат</option>
-                                <option value="robot" {{ request('transmission') == 'robot' ? 'selected' : '' }}>Робот
-                                </option>
-                            </select>
+                            <x-ui.select name="transmission" label="Коробка передач" id="transmission"
+                                :options="[
+                                    'manual' => 'Механика',
+                                    'automatic' => 'Автомат',
+                                    'robot' => 'Робот',
+                                ]" :value="request('transmission')" placeholder="Любая КПП"
+                                labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
                         <!-- Фильтр по Году выпуска -->

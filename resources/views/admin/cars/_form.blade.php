@@ -8,13 +8,7 @@
 @csrf
 
 @if($errors->any())
-    <div class="alert alert-danger mb-4">
-        <ul class="mb-0">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <x-validation-errors class="mb-4" />
 @endif
 
 <input type="hidden" name="status" value="{{ old('status', $car->status ?? 'available') }}">
@@ -48,14 +42,9 @@
     </div>
 
     <div class="col-12 col-md-6">
-        <label class="form-label small fw-bold text-muted">Тип кузова</label>
-        <select name="body_type_id" class="form-select form-select-sm" required>
-            @foreach($bodyTypes as $type)
-                <option value="{{ $type->id }}" {{ old('body_type_id', $car->body_type_id ?? '') == $type->id ? 'selected' : '' }}>
-                    {{ $type->name }}
-                </option>
-            @endforeach
-        </select>
+        <x-ui.select name="body_type_id" label="Тип кузова"
+            :options="$bodyTypes->pluck('name', 'id')"
+            :value="$car->body_type_id ?? ''" :required="true" class="form-select-sm" />
     </div>
 
     <div class="col-6 col-md-3">
@@ -79,29 +68,26 @@
     </div>
 
     <div class="col-12 col-md-4">
-        <label class="form-label small fw-bold text-muted">Коробка передач</label>
-        <select name="transmission" class="form-select form-select-sm" required>
-            <option value="manual" {{ old('transmission', $car->transmission ?? '') === 'manual' ? 'selected' : '' }}>Механическая (МКПП)</option>
-            <option value="automatic" {{ old('transmission', $car->transmission ?? '') === 'automatic' ? 'selected' : '' }}>Автоматическая (АКПП)</option>
-            <option value="robot" {{ old('transmission', $car->transmission ?? '') === 'robot' ? 'selected' : '' }}>Роботизированная</option>
-        </select>
+        <x-ui.select name="transmission" label="Коробка передач" :options="[
+            'manual' => 'Механическая (МКПП)',
+            'automatic' => 'Автоматическая (АКПП)',
+            'robot' => 'Роботизированная',
+        ]" :value="$car->transmission ?? ''" :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-4">
-        <label class="form-label small fw-bold text-muted">Привод</label>
-        <select name="drive_type" class="form-select form-select-sm" required>
-            <option value="FWD" {{ old('drive_type', $car->drive_type ?? '') === 'FWD' ? 'selected' : '' }}>Передний (FWD)</option>
-            <option value="RWD" {{ old('drive_type', $car->drive_type ?? '') === 'RWD' ? 'selected' : '' }}>Задний (RWD)</option>
-            <option value="AWD" {{ old('drive_type', $car->drive_type ?? '') === 'AWD' ? 'selected' : '' }}>Полный (AWD)</option>
-        </select>
+        <x-ui.select name="drive_type" label="Привод" :options="[
+            'FWD' => 'Передний (FWD)',
+            'RWD' => 'Задний (RWD)',
+            'AWD' => 'Полный (AWD)',
+        ]" :value="$car->drive_type ?? ''" :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-4">
-        <label class="form-label small fw-bold text-muted">Топливо</label>
-        <select name="fuel_type" class="form-select form-select-sm" required>
-            <option value="petrol" {{ old('fuel_type', $car->fuel_type ?? '') === 'petrol' ? 'selected' : '' }}>Бензин</option>
-            <option value="diesel" {{ old('fuel_type', $car->fuel_type ?? '') === 'diesel' ? 'selected' : '' }}>Дизель</option>
-            <option value="electric" {{ old('fuel_type', $car->fuel_type ?? '') === 'electric' ? 'selected' : '' }}>Электро</option>
-            <option value="hybrid" {{ old('fuel_type', $car->fuel_type ?? '') === 'hybrid' ? 'selected' : '' }}>Гибрид</option>
-        </select>
+        <x-ui.select name="fuel_type" label="Топливо" :options="[
+            'petrol' => 'Бензин',
+            'diesel' => 'Дизель',
+            'electric' => 'Электро',
+            'hybrid' => 'Гибрид',
+        ]" :value="$car->fuel_type ?? ''" :required="true" class="form-select-sm" />
     </div>
 </div>
 
@@ -116,7 +102,7 @@
                     {{ in_array($option->id, (array) $selectedOptionIds) ? 'checked' : '' }}>
                 <label class="form-check-label small w-100" for="option{{ $option->id }}">
                     {{ $option->name }}
-                    <span class="text-muted d-block" style="font-size: 0.75rem;">+ {{ number_format($option->price, 0, ',', ' ') }} ₽</span>
+                    <span class="text-muted d-block" style="font-size: 0.75rem;">+ <x-money :money="$option->price" /></span>
                 </label>
             </div>
         </div>

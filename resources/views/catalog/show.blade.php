@@ -14,10 +14,7 @@
         </nav>
 
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <x-alert class="mb-4" />
         @endif
 
         <div class="row g-4">
@@ -49,12 +46,7 @@
 
                     <!-- Статус авто (из ENUM поля 'status') -->
                     <div class="mb-2">
-                        <span class="badge py-2 px-3 fw-bold 
-                            @if($car->status === 'available') bg-success 
-                            @elseif($car->status === 'reserved') bg-warning text-dark 
-                            @else bg-danger @endif">
-                            {{ $car->status === 'available' ? 'В наличии на складе' : ($car->status === 'reserved' ? 'Забронирован' : 'Продан') }}
-                        </span>
+                        <x-car-status :car="$car" />
                     </div>
 
                     <!-- Название марки и модели -->
@@ -68,7 +60,7 @@
                         <div>
                             <span class="text-uppercase text-muted small fw-bold d-block"
                                 style="font-size: 0.75rem; letter-spacing: 0.5px;">Актуальная стоимость</span>
-                            <span class="display-6 fw-bold text-dark">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
+                            <span class="display-6 fw-bold text-dark"><x-money :money="$car->price" /></span>
                         </div>
                         <span class="text-success small fw-semibold">Цена зафиксирована</span>
                     </div>
@@ -121,26 +113,19 @@
                                 <tr>
                                     <td class="text-muted py-2">Коробка передач (КПП)</td>
                                     <td class="fw-bold text-dark py-2">
-                                        @if($car->transmission === 'manual') Механическая (МКПП)
-                                        @elseif($car->transmission === 'automatic') Автоматическая (АКПП)
-                                        @else Роботизированная @endif
+                                        <x-spec-text field="transmission" :value="$car->transmission" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-muted py-2">Тип привода</td>
                                     <td class="fw-bold text-dark py-2">
-                                        @if($car->drive_type === 'FWD') Передний (FWD)
-                                        @elseif($car->drive_type === 'RWD') Задний (RWD)
-                                        @else Полный (AWD) @endif
+                                        <x-spec-text field="drive_type" :value="$car->drive_type" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-muted py-2">Тип топлива</td>
                                     <td class="fw-bold text-dark py-2">
-                                        @if($car->fuel_type === 'petrol') Бензин
-                                        @elseif($car->fuel_type === 'diesel') Дизель
-                                        @elseif($car->fuel_type === 'electric') Электро
-                                        @else Гибрид @endif
+                                        <x-spec-text field="fuel_type" :value="$car->fuel_type" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -159,7 +144,7 @@
                                     <div>
                                         <span class="text-dark d-block fw-semibold">{{ $option->name }}</span>
                                         @if($option->price > 0)
-                                            <small class="text-muted">+ {{ number_format($option->price, 0, ',', ' ') }} ₽</small>
+                                            <small class="text-muted">+ <x-money :money="$option->price" /></small>
                                         @else
                                             <small class="text-success">Включено в стоимость</small>
                                         @endif

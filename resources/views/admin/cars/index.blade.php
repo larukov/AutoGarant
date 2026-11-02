@@ -12,11 +12,8 @@
             </div>
         </div>
 
-        @if(session('success'))
-            <div class="alert alert-success mb-4">{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger mb-4">{{ session('error') }}</div>
+        @if(session('success') || session('error'))
+            <x-alert class="mb-4" />
         @endif
 
         <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
@@ -44,18 +41,16 @@
                                 <td>
                                     <small class="d-block">{{ number_format($car->engine_volume, 1, ',', ' ') }} л /
                                         {{ $car->drive_type }}</small>
-                                    <small class="text-muted">{{ $car->fuel_type }}</small>
+                                    <small class="text-muted"><x-spec-text field="fuel_type" :value="$car->fuel_type" /></small>
                                 </td>
                                 <td>
                                     <span class="badge bg-secondary">{{ $car->images->count() }} фото</span>
                                 </td>
-                                <td class="fw-bold text-primary">{{ number_format($car->price, 0, ',', ' ') }} ₽</td>
+                                <td class="fw-bold text-primary"><x-money :money="$car->price" /></td>
                                 <td>
-                                    <span class="badge py-1 px-2 {{ $car->status === 'available' ? 'bg-success' : ($car->status === 'reserved' ? 'bg-warning text-dark' : 'bg-danger') }}">
-                                        {{ $car->status === 'available' ? 'В наличии' : ($car->status === 'reserved' ? 'Бронь' : 'Продан') }}
-                                    </span>
+                                    <x-car-status :car="$car" compact />
                                     <small class="d-block text-muted mt-1">
-                                        {{ $car->transmission === 'manual' ? 'МКПП' : ($car->transmission === 'automatic' ? 'АКПП' : 'Робот') }}
+                                        <x-spec-text field="transmission" :value="$car->transmission" short />
                                     </small>
                                 </td>
                                 <td class="text-center">

@@ -35,10 +35,7 @@
                 <h3 class="fw-bold text-dark h4 mb-4 border-bottom pb-2">Мониторинг статуса исполнения договоров</h3>
 
                 @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                    <x-alert class="mb-4" />
                 @endif
 
                 @if($orders->count() > 0)
@@ -100,9 +97,9 @@
                                         </td>
 
                                         <!-- Финальная зафиксированная цена -->
-                                        <td class="text-end py-3 fw-bold text-dark">
-                                            {{ number_format($order->final_price, 0, ',', ' ') }} ₽
-                                        </td>
+<td class="text-end py-3 fw-bold text-dark">
+                                        <x-money :money="$order->final_price" />
+                                    </td>
                                     </tr>
                                 @endforeach
                             </tbody>
