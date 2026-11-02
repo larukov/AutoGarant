@@ -6,6 +6,9 @@
     <div class="container-fluid py-5 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="fw-bold h2 text-dark">Панель администратора</h1>
+            <a href="{{ route('admin.cars.index') }}" class="btn btn-primary fw-bold">
+                ⚙️ Управление каталогом автомобилей
+            </a>
         </div>
 
         <!-- БЛОК: Финансовый отчет (Требование ТЗ) -->

@@ -49,33 +49,6 @@
     @endguest
     @yield('content')
     @include("layouts.footer")
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
-        <div id="successToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"
-            data-bs-delay="3000">
-            <div class="toast-header bg-success text-white">
-                <strong class="me-auto">✅ Успешно</strong>
-                <small>только что</small>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-            <div class="toast-body" id="toastMessage">
-                Операция выполнена успешно.
-            </div>
-        </div>
-
-        <div id="errorToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true"
-            data-bs-delay="5000">
-            <div class="toast-header bg-danger text-white">
-                <strong class="me-auto">❌ Ошибка</strong>
-                <small>только что</small>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-            <div class="toast-body" id="toastErrorMessage">
-                Произошла ошибка.
-            </div>
-        </div>
-    </div>
     @yield('script')
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.3.3.js') }}"></script>

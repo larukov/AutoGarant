@@ -173,7 +173,8 @@
                     @endif
                 </div>
                 <!-- Интерактивный калькулятор автокредита -->
-                <div class="bg-white p-4 rounded-3 shadow-sm mt-4">
+                <div class="bg-white p-4 rounded-3 shadow-sm mt-4" id="creditCalculator"
+                    data-car-price="{{ $car->price }}">
                     <h3 class="fw-bold text-dark mb-4 h4 border-bottom pb-2">📊 Предварительный расчет автокредита</h3>
 
                     <div class="row g-3">
@@ -263,6 +264,50 @@
                                 </select>
                             </div>
 
+                            @if($car->options && $car->options->count() > 0)
+                                <hr>
+                                <h6 class="fw-bold text-dark small mb-2">Дополнительные опции</h6>
+                                <div class="mb-3">
+                                    @foreach($car->options as $option)
+                                        <div class="form-check d-flex justify-content-between align-items-center border rounded p-2 mb-1 option-row"
+                                            data-price="{{ $option->price }}">
+                                            <div>
+                                                <input class="form-check-input" type="checkbox" name="options[]"
+                                                    value="{{ $option->id }}" id="option{{ $option->id }}">
+                                                <label class="form-check-label small ms-1" for="option{{ $option->id }}">
+                                                    {{ $option->name }}
+                                                </label>
+                                            </div>
+                                            <span class="small text-muted" style="font-size: 0.8rem;">
+                                                {{ $option->price > 0 ? '+' . number_format($option->price, 0, ',', ' ') . ' ₽' : 'Включено' }}
+                                            </span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            <!-- Скрытые поля для кредитного расчёта (заполняются из калькулятора) -->
+                            <input type="hidden" name="down_payment" id="orderDownPayment" value="0">
+                            <input type="hidden" name="loan_term_months" id="orderLoanTerm" value="36">
+                            <input type="hidden" name="interest_rate" id="orderInterestRate" value="11.5">
+                            <input type="hidden" name="final_price" id="orderFinalPrice" value="{{ $car->price }}">
+
+                            <div class="p-3 bg-light rounded-3 mb-2">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="small text-muted">Базовая стоимость:</span>
+                                    <span class="text-dark fw-semibold small" id="summaryBasePrice">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="small text-muted">Доп. опции:</span>
+                                    <span class="text-dark fw-semibold small" id="summaryOptionsPrice">0 ₽</span>
+                                </div>
+                                <hr class="my-2">
+                                <div class="d-flex justify-content-between">
+                                    <span class="small fw-bold text-dark">Итого:</span>
+                                    <span class="fw-bold text-dark" id="summaryTotalPrice">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
+                                </div>
+                            </div>
+
                             <div class="p-3 bg-light rounded-3 mb-2">
                                 <div class="d-flex justify-content-between mb-1 small text-muted">
                                     <span>Имя клиента:</span>
@@ -270,7 +315,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between small text-muted">
                                     <span>Телефон для связи:</span>
-                                    <span class="text-dark fw-semibold">{{ Auth::user()->phone }}</span>
+                                    <span class="text-dark fw-semibold">{{ Auth::user()->tel }}</span>
                                 </div>
                             </div>
                         </div>
@@ -287,4 +332,36 @@
 @endsection
 @section('script')
     <script src="{{ asset('js/calculator.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const basePrice = parseFloat('{{ $car->price }}') || 0;
+            const optionsPriceEl = document.getElementById('summaryOptionsPrice');
+            const totalPriceEl = document.getElementById('summaryTotalPrice');
+            const finalPriceInput = document.getElementById('orderFinalPrice');
+            const optionRows = document.querySelectorAll('.option-row');
+            const optionCheckboxes = document.querySelectorAll('input[name="options[]"]');
+
+            function fmt(v) {
+                return Math.round(v).toLocaleString('ru-RU') + ' ₽';
+            }
+
+            function recalc() {
+                let optionsTotal = 0;
+                optionRows.forEach(function (row) {
+                    const cb = row.querySelector('input[type="checkbox"]');
+                    if (cb && cb.checked) {
+                        optionsTotal += parseFloat(row.dataset.price) || 0;
+                    }
+                });
+                const total = basePrice + optionsTotal;
+                if (optionsPriceEl) optionsPriceEl.innerText = fmt(optionsTotal);
+                if (totalPriceEl) totalPriceEl.innerText = fmt(total);
+                if (finalPriceInput) finalPriceInput.value = total;
+            }
+
+            optionCheckboxes.forEach(function (cb) {
+                cb.addEventListener('change', recalc);
+            });
+        });
+    </script>
 @endsection

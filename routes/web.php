@@ -43,7 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/order/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.orders.update');
 
     Route::get('/admin/cars', [AdminController::class, 'carsIndex'])->name('admin.cars.index');
+    Route::get('/admin/cars/create', [AdminController::class, 'carCreate'])->name('admin.cars.create');
     Route::post('/admin/cars/store', [AdminController::class, 'carStore'])->name('admin.cars.store');
+    Route::get('/admin/cars/{id}/edit', [AdminController::class, 'carEdit'])->name('admin.cars.edit');
     Route::post('/admin/cars/{id}/update', [AdminController::class, 'carUpdate'])->name('admin.cars.update');
     Route::delete('/admin/cars/{id}/delete', [AdminController::class, 'carDestroy'])->name('admin.cars.destroy');
+    Route::delete('/admin/cars/images/{id}/delete', [AdminController::class, 'imageDestroy'])->name('admin.cars.images.destroy');
 });
