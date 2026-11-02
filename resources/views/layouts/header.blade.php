@@ -41,13 +41,13 @@
                             Личный кабинет
                         </a>
                         @if(Auth::user()->is_admin)
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-danger btn-sm px-3 rounded-2">
+                            <a href="{{ route('admin.index') }}" class="btn btn-danger btn-sm px-3 rounded-2">
                                 Админ-панель
                             </a>
                         @endif
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-link text-muted text-decoration-none btn-sm">Выйти</button>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Выйти</button>
                         </form>
                     @endauth
 

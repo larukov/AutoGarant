@@ -10,7 +10,6 @@
                 <form action="{{ route('login') }}" method="POST" class="d-flex flex-column">
                     @csrf
 
-                    {{-- Вывод ошибок --}}
                     <x-validation-errors bag="login" />
 
                     <x-ui.input name="email" type="email" label="Email" placeholder="example@mail.ru" required />
@@ -61,7 +60,7 @@
                     <!-- Телефон ( name="phone" в соответствии с полем в БД ) -->
                     <div class="row mb-2">
                         <div class="col-12">
-                            <x-ui.input name="phone" type="tel" id="phone" label="Номер телефона" placeholder="+7 (999) 123-45-67" required/>
+                            <x-ui.input name="tel" type="tel" id="phone" label="Номер телефона" placeholder="+7 (999) 123-45-67" required/>
                         </div>
                     </div>
 

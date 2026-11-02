@@ -14,11 +14,10 @@ class RegisterController extends Controller
         $validateData = $request->validate([
             'email'      => 'required|email|unique:users,email',
             'name'       => 'required|string|max:255',
-            'lastname'   => 'required|string|max:255',
-            'patronomic' => 'nullable|string|max:255',
             'password'   => 'required|min:6|confirmed',
-            'tel'        => 'nullable|string|max:20',
+            'tel'        => 'required|unique:users,tel',
         ], [
+            'tel.unique'           => 'Этот номер уже зарегистрирован',
             'email.unique'         => 'Этот email уже зарегистрирован',
             'password.confirmed'   => 'Пароли не совпадают',
             'password.min'         => 'Пароль должен содержать минимум 6 символов',

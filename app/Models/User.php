@@ -17,7 +17,7 @@ class User extends Authenticatable
     const CREATED_AT = 'created_at';
 
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'is_admin', 'status'
+        'name', 'email', 'password', 'tel', 'is_admin', 'status'
     ];
 
     protected $hidden = [

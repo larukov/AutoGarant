@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone');
+            $table->string('tel')->unique();
             $table->boolean('is_admin')->default(false);
             $table->boolean('status')->default(true);
+            $table->rememberToken();
             $table->timestamp('created_at')->useCurrent();
         });
     }

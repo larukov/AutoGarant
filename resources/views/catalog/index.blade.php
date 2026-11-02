@@ -49,7 +49,6 @@
                             </select>
                         </div>
 
-                        <!-- Фильтр по Коробке передач (ENUM из БД) -->
                         <div class="mb-3">
                             <label for="transmission" class="form-label small fw-bold text-secondary">Коробка
                                 передач</label>
