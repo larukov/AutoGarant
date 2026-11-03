@@ -7,7 +7,7 @@ use App\Models\Car;
 
 class HomeController extends Controller
 {
-     public function index()
+    public function index()
     {
         $popularCars = Car::with(['model.brand', 'bodyType', 'images'])
             ->where('status', 'available')->orderBy('created_at', 'desc')->take(3)->get();

@@ -240,14 +240,11 @@
                                     {{ $car->model->name }}</strong> со склада автосалона.
                             </p>
 
-                            <div class="mb-3">
-                                <label for="payment_type" class="form-label small fw-bold text-secondary">Способ оплаты</label>
-                                <select class="form-select" id="payment_type" name="payment_type" required>
-                                    <option value="cash">Наличный расчет в автосалоне</option>
-                                    <option value="card">Банковская карта</option>
-                                    <option value="credit">Оформление в автокредит</option>
-                                </select>
-                            </div>
+                            <x-ui.select name="payment_type" label="Способ оплаты" id="payment_type" :options="[
+                                'cash' => 'Наличный расчет в автосалоне',
+                                'card' => 'Банковская карта',
+                                'credit' => 'Оформление в автокредит',
+                            ]" :required="true" labelClass="form-label small fw-bold text-secondary" />
 
                             @if($car->options && $car->options->count() > 0)
                                 <hr>

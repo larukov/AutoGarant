@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    /**
-     * Создание новой заявки на бронирование автомобиля.
-     */
+
     public function store(Request $request)
     {
         // 1. Валидация входящих данных из формы модального окна

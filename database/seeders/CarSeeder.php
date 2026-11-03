@@ -42,14 +42,8 @@ class CarSeeder extends Seeder
                 'status' => collect($statuses)->random(),
             ]);
 
-            // 1. Создаем запись изображения. Путь ведет в public/images/cars/
-            // Физически файлы должны лежать по адресу: public/images/cars/1.jpg, public/images/cars/2.jpg и т.д.
-            $car->images()->create([
-                'name' => "Фото автомобиля " . $car->id,
-                'image_url' => "/images/cars/{$i}.jpg"
-            ]);
-
-            // 2. Привязываем 1-2 случайные дополнительные опции (связь Многие-ко-многим)
+            // Опции (связь Многие-ко-многим). Изображения машин назначает ImageSeeder
+            // по файлам из storage/app/public/images/cars/1.jpg ... 11.jpg
             $carOptions = $options->random(rand(1, 2));
             foreach ($carOptions as $option) {
                 $car->options()->attach($option->id, ['count' => 1]);

@@ -25,15 +25,10 @@
                     <form action="{{ route('catalog.index') }}" method="GET">
                         <!-- Фильтр по Маркам (Брендам) -->
                         <div class="mb-3">
-                            <label for="brand" class="form-label small fw-bold text-secondary">Марка автомобиля</label>
-                            <select class="form-select form-select-sm" id="brand" name="brand_id">
-                                <option value="">Все марки</option>
-                                @foreach($brands as $brand)
-                                    <option value="{{ $brand->id }}" {{ request('brand_id') == $brand->id ? 'selected' : '' }}>
-                                        {{ $brand->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <x-ui.select name="brand_id" label="Марка автомобиля" id="brand"
+                                :options="$brands->pluck('name', 'id')" :value="request('brand_id')"
+                                placeholder="Все марки" labelClass="form-label small fw-bold text-secondary"
+                                class="form-select-sm" />
                         </div>
 
                         <!-- Фильтр по Типу кузова -->
@@ -56,13 +51,10 @@
 
                         <!-- Фильтр по Году выпуска -->
                         <div class="mb-3">
-                            <label for="year" class="form-label small fw-bold text-secondary">Год выпуска</label>
-                            <select class="form-select form-select-sm" id="year" name="year">
-                                <option value="">Любой год</option>
-                                @for($y = 2026; $y >= 2020; $y--)
-                                    <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }} г.</option>
-                                @endfor
-                            </select>
+                            <x-ui.select name="year" label="Год выпуска" id="year"
+                                :options="collect(range(2026, 2020))->mapWithKeys(fn ($y) => [$y => $y . ' г.'])->all()"
+                                :value="request('year')" placeholder="Любой год"
+                                labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
                         <!-- Фильтр по Максимальной Цене -->

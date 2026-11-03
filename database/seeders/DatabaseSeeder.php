@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             BodyTypeSeeder::class,
             OptionSeeder::class,
             CarSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }

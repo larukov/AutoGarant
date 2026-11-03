@@ -40,7 +40,7 @@ class CatalogController extends Controller
 
         return view('catalog.index', compact('cars', 'brands', 'bodyTypes'));
     }
-     public function show($id)
+    public function show($id)
     {
         $car = Car::with(['model.brand', 'bodyType', 'images', 'options'])->findOrFail($id);
 

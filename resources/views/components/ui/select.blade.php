@@ -8,15 +8,17 @@
     'id' => null,
     'class' => '',
     'labelClass' => 'form-label small fw-bold text-muted',
+    'wrapperClass' => 'mb-3',
     'disabled' => false,
+    'useOld' => true,
 ])
 
 @php
     $selectId = $id ?? 'select-' . $name . '-' . uniqid();
-    $current = old($name, $value);
+    $current = $useOld ? old($name, $value) : $value;
 @endphp
 
-<div class="mb-3">
+<div class="{{ $wrapperClass }}">
     @if ($label)
         <label for="{{ $selectId }}" class="{{ $labelClass }}">
             {{ $label }}
@@ -35,8 +37,15 @@
             <option value="">{{ $placeholder }}</option>
         @endif
 
-        @foreach ($options as $optionValue => $optionLabel)
+        @foreach ($options as $optionValue => $option)
+            @php
+                $optionLabel = is_array($option) ? ($option['label'] ?? '') : $option;
+                $optionAttributes = is_array($option) ? ($option['attributes'] ?? []) : [];
+            @endphp
             <option value="{{ $optionValue }}"
+                @foreach ($optionAttributes as $attributeName => $attributeValue)
+                    {{ $attributeName }}="{{ $attributeValue }}"
+                @endforeach
                 {{ (string) $current === (string) $optionValue ? 'selected' : '' }}>
                 {{ $optionLabel }}
             </option>

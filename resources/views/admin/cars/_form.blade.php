@@ -3,6 +3,16 @@
     $selectedBrandId = old('brand_id', $car?->model->brand_id);
     $selectedModelId = old('model_id', $car?->model_id);
     $selectedOptionIds = old('options', $optionIds ?? []);
+
+    $modelOptions = [];
+    foreach ($brands as $brand) {
+        foreach ($brand->models as $model) {
+            $modelOptions[$model->id] = [
+                'label' => $model->name,
+                'attributes' => ['data-brand' => $brand->id],
+            ];
+        }
+    }
 @endphp
 
 @csrf
@@ -16,28 +26,13 @@
 <div class="row g-3">
     {{-- Марка и модель --}}
     <div class="col-12 col-md-6">
-        <label class="form-label small fw-bold text-muted">Марка автомобиля</label>
-        <select name="brand_id" id="brandSelect" class="form-select form-select-sm" required>
-            <option value="">Выберите марку</option>
-            @foreach($brands as $brand)
-                <option value="{{ $brand->id }}" {{ (int) $selectedBrandId === (int) $brand->id ? 'selected' : '' }}>
-                    {{ $brand->name }}
-                </option>
-            @endforeach
-        </select>
+        <x-ui.select name="brand_id" label="Марка автомобиля" id="brandSelect"
+            :options="$brands->pluck('name', 'id')" :value="$selectedBrandId" placeholder="Выберите марку"
+            :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-6">
-        <label class="form-label small fw-bold text-muted">Модель автомобиля</label>
-        <select name="model_id" id="modelSelect" class="form-select form-select-sm" required>
-            <option value="">Сначала выберите марку</option>
-            @foreach($brands as $brand)
-                @foreach($brand->models as $model)
-                    <option value="{{ $model->id }}" data-brand="{{ $brand->id }}" {{ (int) $selectedModelId === (int) $model->id ? 'selected' : '' }}>
-                        {{ $model->name }}
-                    </option>
-                @endforeach
-            @endforeach
-        </select>
+        <x-ui.select name="model_id" label="Модель автомобиля" id="modelSelect" :options="$modelOptions"
+            :value="$selectedModelId" placeholder="Сначала выберите марку" :required="true" class="form-select-sm" />
     </div>
 
     <div class="col-12 col-md-6">

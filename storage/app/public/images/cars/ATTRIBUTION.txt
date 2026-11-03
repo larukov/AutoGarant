@@ -1,0 +1,48 @@
+Car catalog images for AutoGarant
+Source: Wikimedia Commons (https://commons.wikimedia.org)
+
+1.jpg - Geely Coolray
+   File: File:Moscow - 2026 - Geely Coolray compact crossover.jpg
+   Author: Юрий Д.К.
+   License: CC BY 4.0
+   Page: https://commons.wikimedia.org/wiki/File:Moscow_-_2026_-_Geely_Coolray_compact_crossover.jpg
+3.jpg - Geely Monjaro
+   File: File:Geely Monjaro.jpg
+   Author: Milhouse35
+   License: CC BY-SA 4.0
+   Page: https://commons.wikimedia.org/wiki/File:Geely_Monjaro.jpg
+4.jpg - Chery Tiggo 7 Pro
+   File: File:2023 Chery Tiggo7 Pro Max grey front.jpg
+   Author: Throwawayacc222
+   License: CC0
+   Page: https://commons.wikimedia.org/wiki/File:2023_Chery_Tiggo7_Pro_Max_grey_front.jpg
+5.jpg - Haval Dargo
+   File: File:2025 Haval Dargo Premium 4WD black front.jpg
+   Author: Throwawayacc222
+   License: CC0
+   Page: https://commons.wikimedia.org/wiki/File:2025_Haval_Dargo_Premium_4WD_black_front.jpg
+6.jpg - Chery Tiggo 4 Pro
+   File: File:Chery Tiggo 4 IMG002.jpg
+   Author: Zotyefan
+   License: CC0
+   Page: https://commons.wikimedia.org/wiki/File:Chery_Tiggo_4_IMG002.jpg
+7.jpg - Lada Vesta
+   File: File:Lada Vesta (cropped).jpg
+   Author: Sergey Rodovnichenko
+   License: CC BY-SA 2.0
+   Page: https://commons.wikimedia.org/wiki/File:Lada_Vesta_(cropped).jpg
+8.jpg - Lada Niva Travel
+   File: File:2024 Lada Niva Travel green front.jpg
+   Author: Throwawayacc222
+   License: CC0
+   Page: https://commons.wikimedia.org/wiki/File:2024_Lada_Niva_Travel_green_front.jpg
+9.jpg - Haval Jolion
+   File: File:Haval Jolion 002.jpg
+   Author: JustAnotherCarDesigner
+   License: CC BY-SA 4.0
+   Page: https://commons.wikimedia.org/wiki/File:Haval_Jolion_002.jpg
+10.jpg - Chery Tiggo 7 Pro
+   File: File:2024 Chery Tiggo 7 Pro 1.5 Premium in Ruby Red.jpg
+   Author: MoCars
+   License: CC0
+   Page: https://commons.wikimedia.org/wiki/File:2024_Chery_Tiggo_7_Pro_1.5_Premium_in_Ruby_Red.jpg

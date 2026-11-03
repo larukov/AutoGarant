@@ -75,29 +75,23 @@
                                 <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
                                     @csrf
                                     <td>
-                                        <select name="payment_status" class="form-select form-select-sm"
-                                            style="min-width: 140px;">
-                                            <option value="unpaid" {{ $order->payment_status === 'unpaid' ? 'selected' : '' }}>Не
-                                                оплачен</option>
-                                            <option value="10%" {{ $order->payment_status === '10%' ? 'selected' : '' }}>
-                                                Предоплата 10%</option>
-                                            <option value="50%" {{ $order->payment_status === '50%' ? 'selected' : '' }}>
-                                                Предоплата 50%</option>
-                                            <option value="fully_paid" {{ $order->payment_status === 'fully_paid' ? 'selected' : '' }}>Оплачен полностью</option>
-                                        </select>
+                                        <x-ui.select name="payment_status" :options="[
+                                            'unpaid' => 'Не оплачен',
+                                            '10%' => 'Предоплата 10%',
+                                            '50%' => 'Предоплата 50%',
+                                            'fully_paid' => 'Оплачен полностью',
+                                        ]" :value="$order->payment_status" :use-old="false" class="form-select-sm"
+                                            wrapperClass="mb-0" style="min-width: 140px;" />
                                     </td>
 
                                     <td>
-                                        <select name="status"
-                                            class="form-select form-select-sm fw-semibold {{ $order->status === 'confirmed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary') }}"
-                                            style="min-width: 160px;">
-                                            <option value="created" {{ $order->status === 'created' ? 'selected' : '' }}>Заявка
-                                                оформлена</option>
-                                            <option value="confirmed" {{ $order->status === 'confirmed' ? 'selected' : '' }}>
-                                                Договор подписан</option>
-                                            <option value="rejected" {{ $order->status === 'rejected' ? 'selected' : '' }}>Сделка
-                                                отклонена</option>
-                                        </select>
+                                        <x-ui.select name="status" :options="[
+                                            'created' => 'Заявка оформлена',
+                                            'confirmed' => 'Договор подписан',
+                                            'rejected' => 'Сделка отклонена',
+                                        ]" :value="$order->status" :use-old="false"
+                                            :class="'form-select-sm fw-semibold ' . ($order->status === 'confirmed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary'))"
+                                            wrapperClass="mb-0" style="min-width: 160px;" />
                                     </td>
 
                                     <!-- Кнопка сохранения изменений в строке -->
