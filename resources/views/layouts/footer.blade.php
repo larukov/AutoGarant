@@ -20,8 +20,7 @@
                             class="text-muted-light text-decoration-none hover-white">Кредитные программы</a></li>
                     <li><a href="{{ url('/#about') }}" class="text-muted-light text-decoration-none hover-white">История
                             компании</a></li>
-                    <li><a href=""
-                            class="text-muted-light text-decoration-none hover-white">Создать аккаунт</a></li>
+                    <li><a href="" class="text-muted-light text-decoration-none hover-white">Создать аккаунт</a></li>
                 </ul>
             </div>
 

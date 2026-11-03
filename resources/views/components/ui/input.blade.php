@@ -29,10 +29,9 @@
 
     <input type="{{ $type }}" name="{{ $name }}" id="{{ $inputId }}"
         class="form-control @error($name) is-invalid @enderror {{ $attributes->get('class', '') }}"
-        placeholder="{{ $placeholder }}" value="{{ $oldValue }}" @if ($required) required @endif
-        @if ($disabled) disabled @endif @if ($readonly) readonly @endif
-        @if ($autocomplete) autocomplete="{{ $autocomplete }}" @else autocomplete="off" @endif
-        {{ $attributes->except(['class']) }}>
+        placeholder="{{ $placeholder }}" value="{{ $oldValue }}" @if ($required) required @endif @if ($disabled)
+        disabled @endif @if ($readonly) readonly @endif @if ($autocomplete) autocomplete="{{ $autocomplete }}" @else
+        autocomplete="off" @endif {{ $attributes->except(['class']) }}>
 
     @error($name)
         <div class="invalid-feedback">

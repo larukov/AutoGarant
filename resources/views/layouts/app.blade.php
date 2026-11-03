@@ -65,7 +65,7 @@
                     const regModal = new bootstrap.Modal(document.getElementById('RegModal'));
                     regModal.show();
                 @endif
-                    });
+                        });
         </script>
     @endguest
 

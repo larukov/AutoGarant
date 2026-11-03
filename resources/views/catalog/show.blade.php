@@ -9,7 +9,8 @@
                 <li class="breadcrumb-item"><a href="{{ route('catalog.index') }}" class="text-decoration-none">Каталог</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $car->model->brand->name }}
-                    {{ $car->model->name }}</li>
+                    {{ $car->model->name }}
+                </li>
             </ol>
         </nav>
 
@@ -158,8 +159,7 @@
                     @endif
                 </div>
                 <!-- Интерактивный калькулятор автокредита -->
-                <div class="bg-white p-4 rounded-3 shadow-sm mt-4" id="creditCalculator"
-                    data-car-price="{{ $car->price }}">
+                <div class="bg-white p-4 rounded-3 shadow-sm mt-4" id="creditCalculator" data-car-price="{{ $car->price }}">
                     <h3 class="fw-bold text-dark mb-4 h4 border-bottom pb-2">📊 Предварительный расчет автокредита</h3>
 
                     <div class="row g-3">
@@ -280,7 +280,8 @@
                             <div class="p-3 bg-light rounded-3 mb-2">
                                 <div class="d-flex justify-content-between mb-2">
                                     <span class="small text-muted">Базовая стоимость:</span>
-                                    <span class="text-dark fw-semibold small" id="summaryBasePrice">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
+                                    <span class="text-dark fw-semibold small"
+                                        id="summaryBasePrice">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span class="small text-muted">Доп. опции:</span>
@@ -289,7 +290,8 @@
                                 <hr class="my-2">
                                 <div class="d-flex justify-content-between">
                                     <span class="small fw-bold text-dark">Итого:</span>
-                                    <span class="fw-bold text-dark" id="summaryTotalPrice">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
+                                    <span class="fw-bold text-dark"
+                                        id="summaryTotalPrice">{{ number_format($car->price, 0, ',', ' ') }} ₽</span>
                                 </div>
                             </div>
 

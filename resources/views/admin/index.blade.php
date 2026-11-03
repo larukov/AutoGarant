@@ -7,11 +7,10 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="fw-bold h2 text-dark">Панель администратора</h1>
             <a href="{{ route('admin.cars.index') }}" class="btn btn-primary fw-bold">
-                ⚙️ Управление каталогом автомобилей
+                Управление каталогом автомобилей
             </a>
         </div>
 
-        <!-- БЛОК: Финансовый отчет (Требование ТЗ) -->
         <div class="row g-3 mb-5">
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card border-0 shadow-sm rounded-3 p-4 bg-primary text-white">
@@ -29,7 +28,6 @@
             </div>
         </div>
 
-        <!-- БЛОК: Управление поступающими заявками -->
         <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
             <h3 class="fw-bold text-dark h4 mb-4 border-bottom pb-2">Все поступающие заявки и статусы сделок</h3>
 
@@ -53,37 +51,29 @@
                     <tbody>
                         @foreach($orders as $order)
                             <tr>
-                                <!-- ID и Дата -->
                                 <td>
                                     <span class="fw-bold text-dark">#{{ $order->id }}</span>
                                     <div class="text-muted small">{{ $order->created_at->format('d.m.Y H:i') }}</div>
                                 </td>
-
-                                <!-- Данные клиента -->
                                 <td>
                                     <span class="fw-semibold text-dark d-block">{{ $order->user->name }}</span>
                                     <small class="text-muted">{{ $order->user->email }} •
                                         {{ $order->user->tel }}</small>
                                 </td>
 
-                                <!-- Данные авто -->
                                 <td>
                                     <span class="fw-bold text-dark d-block">{{ $order->car->model->brand->name }}
                                         {{ $order->car->model->name }}</span>
                                     <small class="text-primary fw-medium"><x-money :money="$order->final_price" /></small>
                                 </td>
 
-                                <!-- Тип оплаты -->
                                 <td>
                                     @if($order->payment_type === 'cash') <span class="badge bg-secondary">Наличные</span>
                                     @elseif($order->payment_type === 'card') <span class="badge bg-secondary">Карта</span>
                                     @else <span class="badge bg-info text-dark">Автокредит</span> @endif
                                 </td>
-
-                                <!-- Форма изменения параметров сделки менеджером -->
                                 <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
                                     @csrf
-                                    <!-- Селект: Статус Оплаты -->
                                     <td>
                                         <select name="payment_status" class="form-select form-select-sm"
                                             style="min-width: 140px;">
@@ -97,7 +87,6 @@
                                         </select>
                                     </td>
 
-                                    <!-- Селект: Статус Сделки -->
                                     <td>
                                         <select name="status"
                                             class="form-select form-select-sm fw-semibold {{ $order->status === 'confirmed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary') }}"

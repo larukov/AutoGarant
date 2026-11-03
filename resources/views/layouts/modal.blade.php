@@ -53,14 +53,16 @@
                             <x-ui.input name="name" type="text" label="Имя" placeholder="Иван" required />
                         </div>
                         <div class="col-12 col-md-6">
-                            <x-ui.input name="email" type="email" label="Email" placeholder="example@mail.ru" required />
+                            <x-ui.input name="email" type="email" label="Email" placeholder="example@mail.ru"
+                                required />
                         </div>
                     </div>
 
                     <!-- Телефон ( name="phone" в соответствии с полем в БД ) -->
                     <div class="row mb-2">
                         <div class="col-12">
-                            <x-ui.input name="tel" type="tel" id="phone" label="Номер телефона" placeholder="+7 (999) 123-45-67" required/>
+                            <x-ui.input name="tel" type="tel" id="phone" label="Номер телефона"
+                                placeholder="+7 (999) 123-45-67" required />
                         </div>
                     </div>
 
@@ -70,7 +72,8 @@
                             <x-ui.input name="password" type="password" label="Пароль" required />
                         </div>
                         <div class="col-12 col-md-6">
-                            <x-ui.input name="password_confirmation" type="password" label="Подтверждение пароля" required />
+                            <x-ui.input name="password_confirmation" type="password" label="Подтверждение пароля"
+                                required />
                         </div>
                     </div>
 

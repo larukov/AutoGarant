@@ -32,8 +32,7 @@
             <option value="">Сначала выберите марку</option>
             @foreach($brands as $brand)
                 @foreach($brand->models as $model)
-                    <option value="{{ $model->id }}" data-brand="{{ $brand->id }}"
-                        {{ (int) $selectedModelId === (int) $model->id ? 'selected' : '' }}>
+                    <option value="{{ $model->id }}" data-brand="{{ $brand->id }}" {{ (int) $selectedModelId === (int) $model->id ? 'selected' : '' }}>
                         {{ $model->name }}
                     </option>
                 @endforeach
@@ -42,8 +41,7 @@
     </div>
 
     <div class="col-12 col-md-6">
-        <x-ui.select name="body_type_id" label="Тип кузова"
-            :options="$bodyTypes->pluck('name', 'id')"
+        <x-ui.select name="body_type_id" label="Тип кузова" :options="$bodyTypes->pluck('name', 'id')"
             :value="$car->body_type_id ?? ''" :required="true" class="form-select-sm" />
     </div>
 
@@ -69,25 +67,26 @@
 
     <div class="col-12 col-md-4">
         <x-ui.select name="transmission" label="Коробка передач" :options="[
-            'manual' => 'Механическая (МКПП)',
-            'automatic' => 'Автоматическая (АКПП)',
-            'robot' => 'Роботизированная',
-        ]" :value="$car->transmission ?? ''" :required="true" class="form-select-sm" />
+        'manual' => 'Механическая (МКПП)',
+        'automatic' => 'Автоматическая (АКПП)',
+        'robot' => 'Роботизированная',
+    ]" :value="$car->transmission ?? ''"
+            :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-4">
         <x-ui.select name="drive_type" label="Привод" :options="[
-            'FWD' => 'Передний (FWD)',
-            'RWD' => 'Задний (RWD)',
-            'AWD' => 'Полный (AWD)',
-        ]" :value="$car->drive_type ?? ''" :required="true" class="form-select-sm" />
+        'FWD' => 'Передний (FWD)',
+        'RWD' => 'Задний (RWD)',
+        'AWD' => 'Полный (AWD)',
+    ]" :value="$car->drive_type ?? ''" :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-4">
         <x-ui.select name="fuel_type" label="Топливо" :options="[
-            'petrol' => 'Бензин',
-            'diesel' => 'Дизель',
-            'electric' => 'Электро',
-            'hybrid' => 'Гибрид',
-        ]" :value="$car->fuel_type ?? ''" :required="true" class="form-select-sm" />
+        'petrol' => 'Бензин',
+        'diesel' => 'Дизель',
+        'electric' => 'Электро',
+        'hybrid' => 'Гибрид',
+    ]" :value="$car->fuel_type ?? ''" :required="true" class="form-select-sm" />
     </div>
 </div>
 
@@ -98,11 +97,11 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="form-check border rounded p-2 px-3">
                 <input class="form-check-input" type="checkbox" name="options[]" value="{{ $option->id }}"
-                    id="option{{ $option->id }}"
-                    {{ in_array($option->id, (array) $selectedOptionIds) ? 'checked' : '' }}>
+                    id="option{{ $option->id }}" {{ in_array($option->id, (array) $selectedOptionIds) ? 'checked' : '' }}>
                 <label class="form-check-label small w-100" for="option{{ $option->id }}">
                     {{ $option->name }}
-                    <span class="text-muted d-block" style="font-size: 0.75rem;">+ <x-money :money="$option->price" /></span>
+                    <span class="text-muted d-block" style="font-size: 0.75rem;">+ <x-money
+                            :money="$option->price" /></span>
                 </label>
             </div>
         </div>
@@ -147,34 +146,34 @@
 </div>
 
 <script>
-        const brandSelect = document.getElementById('brandSelect');
-        const modelSelect = document.getElementById('modelSelect');
+    const brandSelect = document.getElementById('brandSelect');
+    const modelSelect = document.getElementById('modelSelect');
 
-        function filterModels() {
-            const brandId = brandSelect ? brandSelect.value : '';
-            let hasSelected = false;
-            Array.from(modelSelect.options).forEach(opt => {
-                if (!opt.dataset.brand) return;
-                const match = opt.dataset.brand === brandId;
-                opt.hidden = !match;
-                if (match && opt.selected) hasSelected = true;
-            });
-            if (!hasSelected) modelSelect.selectedIndex = 0;
-        }
+    function filterModels() {
+        const brandId = brandSelect ? brandSelect.value : '';
+        let hasSelected = false;
+        Array.from(modelSelect.options).forEach(opt => {
+            if (!opt.dataset.brand) return;
+            const match = opt.dataset.brand === brandId;
+            opt.hidden = !match;
+            if (match && opt.selected) hasSelected = true;
+        });
+        if (!hasSelected) modelSelect.selectedIndex = 0;
+    }
 
-        if (brandSelect && modelSelect) {
-            brandSelect.addEventListener('change', filterModels);
-            filterModels();
-        }
+    if (brandSelect && modelSelect) {
+        brandSelect.addEventListener('change', filterModels);
+        filterModels();
+    }
 
-        const engineInput = document.querySelector('[name="engine_volume"]');
-        const engineError = document.getElementById('engineVolumeError');
-        if (engineInput && engineError) {
-            engineInput.addEventListener('input', function () {
-                const val = parseFloat(this.value);
-                const invalid = isNaN(val) || val < 0.1 || val > 99.9;
-                engineError.classList.toggle('d-none', !invalid);
-                this.classList.toggle('is-invalid', invalid);
-            });
-        }
-    </script>
+    const engineInput = document.querySelector('[name="engine_volume"]');
+    const engineError = document.getElementById('engineVolumeError');
+    if (engineInput && engineError) {
+        engineInput.addEventListener('input', function () {
+            const val = parseFloat(this.value);
+            const invalid = isNaN(val) || val < 0.1 || val > 99.9;
+            engineError.classList.toggle('d-none', !invalid);
+            this.classList.toggle('is-invalid', invalid);
+        });
+    }
+</script>
