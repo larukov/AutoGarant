@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        @if(session('success') || session('error'))
+        @if (session('success') || session('error'))
             <x-alert class="mb-4" />
         @endif
 
@@ -55,13 +55,14 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">
-                                        <a href="{{ route('admin.cars.edit', $car->id) }}"
-                                            class="btn btn-primary btn-sm" title="Редактировать">✎</a>
+                                        <a href="{{ route('admin.cars.edit', $car->id) }}" class="btn btn-primary btn-sm"
+                                            title="Редактировать">✎</a>
                                         <form action="{{ route('admin.cars.destroy', $car->id) }}" method="POST"
                                             onsubmit="return confirm('Вы уверены, что хотите безвозвратно удалить этот автомобиль из базы данных?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Удалить из БД">✕</button>
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                title="Удалить из БД">✕</button>
                                         </form>
                                     </div>
                                 </td>

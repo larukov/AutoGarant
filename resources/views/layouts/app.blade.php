@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield("title")</title>
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <title>@yield('title')</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -39,16 +39,16 @@
             flex: 1 0 auto;
         }
     </style>
-    @yield("css")
+    @yield('css')
 </head>
 
 <body>
-    @include("layouts.header")
+    @include('layouts.header')
     @guest
         @include('layouts.modal')
     @endguest
     @yield('content')
-    @include("layouts.footer")
+    @include('layouts.footer')
     @yield('script')
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery-3.3.3.js') }}"></script>
@@ -57,7 +57,7 @@
 
     @guest
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 @if ($errors->hasBag('login'))
                     const loginModal = new bootstrap.Modal(document.getElementById('AuthorizationModal'));
                     loginModal.show();
@@ -65,12 +65,12 @@
                     const regModal = new bootstrap.Modal(document.getElementById('RegModal'));
                     regModal.show();
                 @endif
-                        });
+            });
         </script>
     @endguest
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#phone").mask("+7 (999) 999-99-99");
         });
     </script>

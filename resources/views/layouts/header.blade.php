@@ -40,7 +40,7 @@
                         <a href="{{ route('profile.index') }}" class="btn btn-outline-primary btn-sm px-3 rounded-2">
                             Личный кабинет
                         </a>
-                        @if(Auth::user()->is_admin)
+                        @if (Auth::user()->is_admin)
                             <a href="{{ route('admin.index') }}" class="btn btn-danger btn-sm px-3 rounded-2">
                                 Админ-панель
                             </a>

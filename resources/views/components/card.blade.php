@@ -23,7 +23,8 @@
             <!-- Краткие тех-характеристики из полей таблицы cars -->
             <div class="row g-2 pt-2 pb-3 my-2 border-top border-bottom text-secondary small">
                 <div class="col-6">Объем: <strong>{{ number_format($car->engine_volume, 1) }} л</strong></div>
-                <div class="col-6">КПП: <strong><x-spec-text field="transmission" :value="$car->transmission" short /></strong></div>
+                <div class="col-6">КПП: <strong><x-spec-text field="transmission" :value="$car->transmission" short /></strong>
+                </div>
                 <div class="col-6">Привод: <strong>{{ $car->drive_type }}</strong></div>
                 <div class="col-6">Топливо: <strong><x-spec-text field="fuel_type" :value="$car->fuel_type" /></strong></div>
             </div>
@@ -32,8 +33,7 @@
         <!-- Цена и Кнопка перехода к карточке -->
         <div class="d-flex align-items-center justify-content-between pt-3 mt-auto">
             <div class="d-flex flex-column">
-                <span class="text-muted text-uppercase small"
-                    style="font-size: 0.7rem;">Стоимость</span>
+                <span class="text-muted text-uppercase small" style="font-size: 0.7rem;">Стоимость</span>
                 <span class="fs-5 fw-bold text-dark"><x-money :money="$car->price" /></span>
             </div>
             <a href="{{ route('catalog.show', $car->id) }}" class="btn btn-dark btn-sm rounded-2 px-3 py-2 fw-semibold">

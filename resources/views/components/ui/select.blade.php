@@ -39,13 +39,12 @@
 
         @foreach ($options as $optionValue => $option)
             @php
-                $optionLabel = is_array($option) ? ($option['label'] ?? '') : $option;
-                $optionAttributes = is_array($option) ? ($option['attributes'] ?? []) : [];
+                $optionLabel = is_array($option) ? $option['label'] ?? '' : $option;
+                $optionAttributes = is_array($option) ? $option['attributes'] ?? [] : [];
             @endphp
             <option value="{{ $optionValue }}"
                 @foreach ($optionAttributes as $attributeName => $attributeValue)
-                    {{ $attributeName }}="{{ $attributeValue }}"
-                @endforeach
+                    {{ $attributeName }}="{{ $attributeValue }}" @endforeach
                 {{ (string) $current === (string) $optionValue ? 'selected' : '' }}>
                 {{ $optionLabel }}
             </option>

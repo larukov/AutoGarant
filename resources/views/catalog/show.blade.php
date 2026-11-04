@@ -14,7 +14,7 @@
             </ol>
         </nav>
 
-        @if(session('success'))
+        @if (session('success'))
             <x-alert class="mb-4" />
         @endif
 
@@ -27,9 +27,9 @@
                             class="w-100 h-100 object-cover rounded">
                     </div>
 
-                    @if($car->images->count() > 1)
+                    @if ($car->images->count() > 1)
                         <div class="row g-2 overflow-auto flex-nowrap px-1" style="max-height: 100px;">
-                            @foreach($car->images as $image)
+                            @foreach ($car->images as $image)
                                 <div class="col-3" style="cursor: pointer; min-width: 100px;">
                                     <img src="{{ $image->image_url }}" alt="Миниатюра"
                                         class="img-thumbnail w-100 h-100 object-cover"
@@ -67,7 +67,7 @@
                     </div>
 
                     <!-- Кнопка вызова формы резервирования / Условия доступности -->
-                    @if($car->status === 'available')
+                    @if ($car->status === 'available')
                         @auth
                             <button type="button" class="btn btn-primary btn-lg w-100 py-3 fw-bold shadow-sm rounded-3 mb-3"
                                 data-bs-toggle="modal" data-bs-target="#orderReservationModal">
@@ -137,14 +137,14 @@
                 <!-- Блок Дополнительных опций (Многие-ко-многим `options`) -->
                 <div class="bg-white p-4 rounded-3 shadow-sm">
                     <h3 class="fw-bold text-dark mb-3 h4 border-bottom pb-2">Установленные дополнительные опции</h3>
-                    @if($car->options && $car->options->count() > 0)
+                    @if ($car->options && $car->options->count() > 0)
                         <div class="row g-3 pt-2">
-                            @foreach($car->options as $option)
+                            @foreach ($car->options as $option)
                                 <div class="col-12 col-md-6 d-flex align-items-center">
                                     <div class="text-success me-2">✓</div>
                                     <div>
                                         <span class="text-dark d-block fw-semibold">{{ $option->name }}</span>
-                                        @if($option->price > 0)
+                                        @if ($option->price > 0)
                                             <small class="text-muted">+ <x-money :money="$option->price" /></small>
                                         @else
                                             <small class="text-success">Включено в стоимость</small>
@@ -159,7 +159,8 @@
                     @endif
                 </div>
                 <!-- Интерактивный калькулятор автокредита -->
-                <div class="bg-white p-4 rounded-3 shadow-sm mt-4" id="creditCalculator" data-car-price="{{ $car->price }}">
+                <div class="bg-white p-4 rounded-3 shadow-sm mt-4" id="creditCalculator"
+                    data-car-price="{{ $car->price }}">
                     <h3 class="fw-bold text-dark mb-4 h4 border-bottom pb-2">📊 Предварительный расчет автокредита</h3>
 
                     <div class="row g-3">
@@ -171,8 +172,8 @@
                                 <span class="fw-bold text-dark" id="downPaymentValue">0 ₽</span>
                             </div>
                             <!-- value="0" — минимальный взнос, max равен стоимости авто -->
-                            <input type="range" class="form-range" id="downPaymentRange" min="0" max="{{ $car->price }}"
-                                step="50000" value="0">
+                            <input type="range" class="form-range" id="downPaymentRange" min="0"
+                                max="{{ $car->price }}" step="50000" value="0">
                             <div class="d-flex justify-content-between text-muted" style="font-size: 0.75rem;">
                                 <span>0%</span>
                                 <span>50%</span>
@@ -183,10 +184,12 @@
                         <!-- Слайдер: Срок кредитования -->
                         <div class="col-12 mt-4">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <label for="periodRange" class="form-label text-muted small mb-0">Срок кредитования</label>
+                                <label for="periodRange" class="form-label text-muted small mb-0">Срок
+                                    кредитования</label>
                                 <span class="fw-bold text-dark" id="periodValue">36 мес.</span>
                             </div>
-                            <input type="range" class="form-range" id="periodRange" min="12" max="84" step="12" value="36">
+                            <input type="range" class="form-range" id="periodRange" min="12" max="84"
+                                step="12" value="36">
                             <div class="d-flex justify-content-between text-muted" style="font-size: 0.75rem;">
                                 <span>1 год</span>
                                 <span>3 года</span>
@@ -223,7 +226,8 @@
     </div>
 
     @auth
-        <div class="modal fade" id="orderReservationModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal fade" id="orderReservationModal" tabindex="-1" aria-labelledby="orderModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -244,7 +248,8 @@
                                 'cash' => 'Наличный расчет в автосалоне',
                                 'card' => 'Банковская карта',
                                 'credit' => 'Оформление в автокредит',
-                            ]" :required="true" labelClass="form-label small fw-bold text-secondary" />
+                            ]"
+                                :required="true" labelClass="form-label small fw-bold text-secondary" />
 
                             <!-- Наглядный блок расчёта автокредита в модалке -->
                             <div id="creditSummaryBlock" class="d-none border rounded-3 p-3 mb-3 bg-white">
@@ -269,8 +274,8 @@
                                         <label class="form-label small text-muted mb-0">Срок кредита</label>
                                         <span class="fw-bold text-dark small" id="modalPeriodValue">36 мес.</span>
                                     </div>
-                                    <input type="range" class="form-range" id="modalPeriodRange" min="12" max="84" step="12"
-                                        value="36">
+                                    <input type="range" class="form-range" id="modalPeriodRange" min="12"
+                                        max="84" step="12" value="36">
                                     <div class="d-flex justify-content-between text-muted" style="font-size: 0.72rem;">
                                         <span>1 год</span><span>4 года</span><span>7 лет</span>
                                     </div>
@@ -293,11 +298,11 @@
                                 </small>
                             </div>
 
-                            @if($car->options && $car->options->count() > 0)
+                            @if ($car->options && $car->options->count() > 0)
                                 <hr>
                                 <h6 class="fw-bold text-dark small mb-2">Дополнительные опции</h6>
                                 <div class="mb-3">
-                                    @foreach($car->options as $option)
+                                    @foreach ($car->options as $option)
                                         <div class="form-check d-flex justify-content-between align-items-center border rounded p-2 mb-1 option-row"
                                             data-price="{{ $option->price }}">
                                             <div>
@@ -364,7 +369,7 @@
 @section('script')
     <script src="{{ asset('js/calculator.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const basePrice = parseFloat('{{ $car->price }}') || 0;
             const optionsPriceEl = document.getElementById('summaryOptionsPrice');
             const totalPriceEl = document.getElementById('summaryTotalPrice');
@@ -395,7 +400,7 @@
 
             function getCurrentTotal() {
                 let optionsTotal = 0;
-                optionRows.forEach(function (row) {
+                optionRows.forEach(function(row) {
                     const cb = row.querySelector('input[type="checkbox"]');
                     if (cb && cb.checked) optionsTotal += parseFloat(row.dataset.price) || 0;
                 });
@@ -460,7 +465,7 @@
             if (modalDownRange) modalDownRange.addEventListener('input', recalcCredit);
             if (modalPeriodRange) modalPeriodRange.addEventListener('input', recalcCredit);
 
-            optionCheckboxes.forEach(function (cb) {
+            optionCheckboxes.forEach(function(cb) {
                 cb.addEventListener('change', recalc);
             });
 

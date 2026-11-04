@@ -25,34 +25,31 @@
                     <form action="{{ route('catalog.index') }}" method="GET">
                         <!-- Фильтр по Маркам (Брендам) -->
                         <div class="mb-3">
-                            <x-ui.select name="brand_id" label="Марка автомобиля" id="brand"
-                                :options="$brands->pluck('name', 'id')" :value="request('brand_id')"
-                                placeholder="Все марки" labelClass="form-label small fw-bold text-secondary"
-                                class="form-select-sm" />
+                            <x-ui.select name="brand_id" label="Марка автомобиля" id="brand" :options="$brands->pluck('name', 'id')"
+                                :value="request('brand_id')" placeholder="Все марки"
+                                labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
                         <!-- Фильтр по Типу кузова -->
                         <div class="mb-3">
-                            <x-ui.select name="body_type_id" label="Тип кузова" id="body_type"
-                                :options="$bodyTypes->pluck('name', 'id')"
+                            <x-ui.select name="body_type_id" label="Тип кузова" id="body_type" :options="$bodyTypes->pluck('name', 'id')"
                                 :value="request('body_type_id')" placeholder="Все типы"
                                 labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
                         <div class="mb-3">
-                            <x-ui.select name="transmission" label="Коробка передач" id="transmission"
-                                :options="[
-                                    'manual' => 'Механика',
-                                    'automatic' => 'Автомат',
-                                    'robot' => 'Робот',
-                                ]" :value="request('transmission')" placeholder="Любая КПП"
+                            <x-ui.select name="transmission" label="Коробка передач" id="transmission" :options="[
+                                'manual' => 'Механика',
+                                'automatic' => 'Автомат',
+                                'robot' => 'Робот',
+                            ]"
+                                :value="request('transmission')" placeholder="Любая КПП"
                                 labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
                         <!-- Фильтр по Году выпуска -->
                         <div class="mb-3">
-                            <x-ui.select name="year" label="Год выпуска" id="year"
-                                :options="collect(range(2026, 2020))->mapWithKeys(fn ($y) => [$y => $y . ' г.'])->all()"
+                            <x-ui.select name="year" label="Год выпуска" id="year" :options="collect(range(2026, 2020))->mapWithKeys(fn($y) => [$y => $y . ' г.'])->all()"
                                 :value="request('year')" placeholder="Любой год"
                                 labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
@@ -85,7 +82,8 @@
                             <div class="py-4 text-muted">
                                 <span class="fs-2 block mb-2">🔍</span>
                                 <h5 class="fw-bold">Ничего не найдено</h5>
-                                <p class="small mb-0">Попробуйте изменить параметры поиска или сбросить активные фильтры.</p>
+                                <p class="small mb-0">Попробуйте изменить параметры поиска или сбросить активные фильтры.
+                                </p>
                             </div>
                         </div>
                     @endforelse

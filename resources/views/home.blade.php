@@ -96,7 +96,7 @@
             </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-                @foreach($popularCars as $car)
+                @foreach ($popularCars as $car)
                     <div class="col d-flex">
                         <x-card :car="$car" />
                     </div>
@@ -118,8 +118,8 @@
                 <div class="col-md-5 text-center">
                     <div class="d-inline-flex align-items-center justify-content-center bg-light text-primary rounded-3 mb-3 p-3 shadow-sm"
                         style="width: 60px; height: 60px;">
-                        <svg xmlns="http://w3.org" width="28" height="28" fill="currentColor" class="bi bi-shield-check"
-                            viewBox="0 0 16 16">
+                        <svg xmlns="http://w3.org" width="28" height="28" fill="currentColor"
+                            class="bi bi-shield-check" viewBox="0 0 16 16">
                             <path
                                 d="M5.338 1.59a61.447 61.447 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233.466.466 0 0 0 .58 0a10.725 10.725 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 1.935 1.935 0 0 1-2.414 0 11.775 11.775 0 0 1-2.517-2.453C1.328 9.617.026 6.3-.57 1.822A1.54 1.54 0 0 1 .475 1.43c.658-.214 1.777-.57 2.887-.87z" />
                             <path
@@ -137,8 +137,8 @@
                 <div class="col-md-5 text-center">
                     <div class="d-inline-flex align-items-center justify-content-center bg-light text-primary rounded-3 mb-3 p-3 shadow-sm"
                         style="width: 60px; height: 60px;">
-                        <svg xmlns="http://w3.org" width="28" height="28" fill="currentColor" class="bi bi-calculator"
-                            viewBox="0 0 16 16">
+                        <svg xmlns="http://w3.org" width="28" height="28" fill="currentColor"
+                            class="bi bi-calculator" viewBox="0 0 16 16">
                             <path
                                 d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
                             <path

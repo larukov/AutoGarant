@@ -28,7 +28,7 @@
                     <div class="mb-0">
                         <span class="text-uppercase text-muted d-block small fw-bold" style="font-size: 0.75rem;">Номер
                             телефона</span>
-                        <span class="text-dark fw-medium">{{ $user->tel}}</span>
+                        <span class="text-dark fw-medium">{{ $user->tel }}</span>
                     </div>
                 </div>
             </div>
@@ -38,11 +38,11 @@
                 <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
                     <h3 class="fw-bold text-dark h4 mb-4 border-bottom pb-2">Мониторинг статуса исполнения договоров</h3>
 
-                    @if(session('success'))
+                    @if (session('success'))
                         <x-alert class="mb-4" />
                     @endif
 
-                    @if($orders->count() > 0)
+                    @if ($orders->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light text-secondary small text-uppercase">
@@ -54,7 +54,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($orders as $order)
+                                    @foreach ($orders as $order)
                                         <tr>
                                             <!-- Информация об авто -->
                                             <td class="py-3">
@@ -63,16 +63,24 @@
                                                 </span>
                                                 <small class="text-muted">
                                                     {{ $order->car->year }} г.в. •
-                                                    @if($order->payment_type === 'cash') Наличные
-                                                    @elseif($order->payment_type === 'card') Карта
-                                                    @else Автокредит @endif
+                                                    @if ($order->payment_type === 'cash')
+                                                        Наличные
+                                                    @elseif($order->payment_type === 'card')
+                                                        Карта
+                                                    @else
+                                                        Автокредит
+                                                    @endif
                                                 </small>
-                                                @if($order->payment_type === 'credit' && $order->creditApplication)
+                                                @if ($order->payment_type === 'credit' && $order->creditApplication)
                                                     <div class="text-muted mt-1" style="font-size: 0.75rem;">
-                                                        Взнос: <strong>{{ number_format($order->creditApplication->down_payment, 0, ',', ' ') }} ₽</strong> ·
+                                                        Взнос:
+                                                        <strong>{{ number_format($order->creditApplication->down_payment, 0, ',', ' ') }}
+                                                            ₽</strong> ·
                                                         {{ $order->creditApplication->loan_term_months }} мес ·
-                                                        {{ number_format($order->creditApplication->interest_rate, 1, ',', ' ') }}% · платёж
-                                                        <strong>{{ number_format($order->creditApplication->monthly_payment, 0, ',', ' ') }} ₽/мес</strong>
+                                                        {{ number_format($order->creditApplication->interest_rate, 1, ',', ' ') }}%
+                                                        · платёж
+                                                        <strong>{{ number_format($order->creditApplication->monthly_payment, 0, ',', ' ') }}
+                                                            ₽/мес</strong>
                                                     </div>
                                                 @endif
                                                 <div class="text-muted" style="font-size: 0.75rem;">от
@@ -81,30 +89,40 @@
 
                                             <!-- Статус оплаты (из ENUM 'payment_status') -->
                                             <td class="text-center py-3">
-                                                <span class="badge rounded-pill px-2 py-1 small 
-                                                            @if($order->payment_status === 'fully_paid') bg-success 
+                                                <span
+                                                    class="badge rounded-pill px-2 py-1 small 
+                                                            @if ($order->payment_status === 'fully_paid') bg-success 
                                                             @elseif($order->payment_status === 'unpaid') bg-danger 
                                                             @else bg-info text-dark @endif">
-                                                    @if($order->payment_status === 'unpaid') Не оплачен
-                                                    @elseif($order->payment_status === '10%') Предоплата 10%
-                                                    @elseif($order->payment_status === '50%') Предоплата 50%
-                                                    @elseif($order->payment_status === 'fully_paid') Оплачен полностью
+                                                    @if ($order->payment_status === 'unpaid')
+                                                        Не оплачен
+                                                    @elseif($order->payment_status === '10%')
+                                                        Предоплата 10%
+                                                    @elseif($order->payment_status === '50%')
+                                                        Предоплата 50%
+                                                    @elseif($order->payment_status === 'fully_paid')
+                                                        Оплачен полностью
                                                     @endif
                                                 </span>
                                             </td>
 
                                             <!-- Динамический статус сделки (из ENUM 'status') по ТЗ -->
                                             <td class="text-center py-3">
-                                                <span class="badge py-2 px-3 fw-semibold
-                                                            @if($order->status === 'created') bg-light text-primary border border-primary
+                                                <span
+                                                    class="badge py-2 px-3 fw-semibold
+                                                            @if ($order->status === 'created') bg-light text-primary border border-primary
                                                             @elseif($order->status === 'confirmed') bg-warning text-dark
                                                             @elseif($order->status === 'rejected') bg-danger
                                                             @else bg-success @endif">
 
-                                                    @if($order->status === 'created') Заявка оформлена
-                                                    @elseif($order->status === 'confirmed') Договор подписан
-                                                    @elseif($order->status === 'rejected') Сделка отклонена
-                                                    @else Сделка закрыта
+                                                    @if ($order->status === 'created')
+                                                        Заявка оформлена
+                                                    @elseif($order->status === 'confirmed')
+                                                        Договор подписан
+                                                    @elseif($order->status === 'rejected')
+                                                        Сделка отклонена
+                                                    @else
+                                                        Сделка закрыта
                                                     @endif
                                                 </span>
                                             </td>
@@ -120,7 +138,8 @@
                         </div>
                     @else
                         <div class="text-center py-5">
-                            <p class="text-muted mb-0">У вас пока нет оформленных заявок на бронирование или предзаказов.</p>
+                            <p class="text-muted mb-0">У вас пока нет оформленных заявок на бронирование или предзаказов.
+                            </p>
                             <a href="{{ route('catalog.index') }}" class="btn btn-outline-primary btn-sm mt-3">Перейти в
                                 каталог</a>
                         </div>

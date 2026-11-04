@@ -31,7 +31,7 @@
         <div class="card border-0 shadow-sm rounded-3 p-4 bg-white">
             <h3 class="fw-bold text-dark h4 mb-4 border-bottom pb-2">Все поступающие заявки и статусы сделок</h3>
 
-            @if(session('success'))
+            @if (session('success'))
                 <x-alert class="mb-4" />
             @endif
 
@@ -50,7 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($orders as $order)
+                        @foreach ($orders as $order)
                             <tr>
                                 <td>
                                     <span class="fw-bold text-dark">#{{ $order->id }}</span>
@@ -69,19 +69,25 @@
                                 </td>
 
                                 <td>
-                                    @if($order->payment_type === 'cash') <span class="badge bg-secondary">Наличные</span>
-                                    @elseif($order->payment_type === 'card') <span class="badge bg-secondary">Карта</span>
-                                    @else <span class="badge bg-info text-dark">Автокредит</span> @endif
+                                    @if ($order->payment_type === 'cash')
+                                        <span class="badge bg-secondary">Наличные</span>
+                                    @elseif($order->payment_type === 'card')
+                                        <span class="badge bg-secondary">Карта</span>
+                                    @else
+                                        <span class="badge bg-info text-dark">Автокредит</span>
+                                    @endif
                                 </td>
 
                                 <td class="text-center">
-                                    @if($order->payment_type === 'credit' && $order->creditApplication)
+                                    @if ($order->payment_type === 'credit' && $order->creditApplication)
                                         <span class="badge bg-light text-primary border border-primary"
                                             data-bs-toggle="tooltip" title="Ориентировочный ежемесячный платёж">
-                                            {{ number_format($order->creditApplication->monthly_payment, 0, ',', ' ') }} ₽/мес
+                                            {{ number_format($order->creditApplication->monthly_payment, 0, ',', ' ') }}
+                                            ₽/мес
                                         </span>
                                         <small class="d-block text-muted mt-1" style="font-size: 0.72rem;">
-                                            {{ number_format($order->creditApplication->down_payment, 0, ',', ' ') }} ₽ взнос ·
+                                            {{ number_format($order->creditApplication->down_payment, 0, ',', ' ') }} ₽
+                                            взнос ·
                                             {{ $order->creditApplication->loan_term_months }} мес ·
                                             {{ number_format($order->creditApplication->interest_rate, 1, ',', ' ') }}%
                                         </small>
@@ -97,8 +103,9 @@
                                             '10%' => 'Предоплата 10%',
                                             '50%' => 'Предоплата 50%',
                                             'fully_paid' => 'Оплачен полностью',
-                                        ]" :value="$order->payment_status" :use-old="false" class="form-select-sm"
-                                            wrapperClass="mb-0" style="min-width: 140px;" />
+                                        ]" :value="$order->payment_status"
+                                            :use-old="false" class="form-select-sm" wrapperClass="mb-0"
+                                            style="min-width: 140px;" />
                                     </td>
 
                                     <td>
@@ -107,8 +114,7 @@
                                             'confirmed' => 'Договор подписан',
                                             'rejected' => 'Сделка отклонена',
                                         ]" :value="$order->status" :use-old="false"
-                                            :class="'form-select-sm fw-semibold ' . ($order->status === 'confirmed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary'))"
-                                            wrapperClass="mb-0" style="min-width: 160px;" />
+                                            :class="'form-select-sm fw-semibold ' . ($order->status === 'confirmed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary'))" wrapperClass="mb-0" style="min-width: 160px;" />
                                     </td>
 
                                     <!-- Кнопка сохранения изменений в строке -->
