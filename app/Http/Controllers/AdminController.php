@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function index()
     {
         // 1. Вывод списка всех заявок в реальном времени
-        $orders = Order::with(['car.model.brand', 'user'])
+        $orders = Order::with(['car.model.brand', 'user', 'creditApplication'])
             ->orderBy('created_at', 'desc')
             ->get();
 

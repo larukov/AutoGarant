@@ -246,6 +246,53 @@
                                 'credit' => 'Оформление в автокредит',
                             ]" :required="true" labelClass="form-label small fw-bold text-secondary" />
 
+                            <!-- Наглядный блок расчёта автокредита в модалке -->
+                            <div id="creditSummaryBlock" class="d-none border rounded-3 p-3 mb-3 bg-white">
+                                <h6 class="fw-bold text-dark mb-3">
+                                    <span class="me-1">🏦</span> Условия автокредита
+                                </h6>
+
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label small text-muted mb-0">Первоначальный взнос</label>
+                                        <span class="fw-bold text-dark small" id="modalDownPaymentValue">0 ₽</span>
+                                    </div>
+                                    <input type="range" class="form-range" id="modalDownPaymentRange" min="0"
+                                        max="{{ $car->price }}" step="50000" value="0">
+                                    <div class="d-flex justify-content-between text-muted" style="font-size: 0.72rem;">
+                                        <span>0%</span><span>50%</span><span>100%</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label small text-muted mb-0">Срок кредита</label>
+                                        <span class="fw-bold text-dark small" id="modalPeriodValue">36 мес.</span>
+                                    </div>
+                                    <input type="range" class="form-range" id="modalPeriodRange" min="12" max="84" step="12"
+                                        value="36">
+                                    <div class="d-flex justify-content-between text-muted" style="font-size: 0.72rem;">
+                                        <span>1 год</span><span>4 года</span><span>7 лет</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center border-top pt-2">
+                                    <span class="small text-muted">Процентная ставка</span>
+                                    <span class="fw-bold text-success small">11.5% годовых</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center border-top pt-2 mt-2">
+                                    <span class="small text-muted">Ежемесячный платёж</span>
+                                    <span class="fw-bold text-primary fs-5" id="modalMonthlyPaymentValue">0 ₽</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="small text-muted">Итого по кредиту</span>
+                                    <span class="fw-bold text-dark" id="modalTotalLoanValue">0 ₽</span>
+                                </div>
+                                <small class="text-muted d-block mt-2" style="font-size: 0.72rem;">
+                                    * Предварительный расчёт. Точные условия фиксирует менеджер автосалона.
+                                </small>
+                            </div>
+
                             @if($car->options && $car->options->count() > 0)
                                 <hr>
                                 <h6 class="fw-bold text-dark small mb-2">Дополнительные опции</h6>
@@ -325,27 +372,99 @@
             const optionRows = document.querySelectorAll('.option-row');
             const optionCheckboxes = document.querySelectorAll('input[name="options[]"]');
 
+            // --- Элементы кредитного блока в модалке ---
+            const paymentType = document.getElementById('payment_type');
+            const creditBlock = document.getElementById('creditSummaryBlock');
+            const modalDownRange = document.getElementById('modalDownPaymentRange');
+            const modalPeriodRange = document.getElementById('modalPeriodRange');
+            const modalDownValue = document.getElementById('modalDownPaymentValue');
+            const modalPeriodValue = document.getElementById('modalPeriodValue');
+            const modalMonthly = document.getElementById('modalMonthlyPaymentValue');
+            const modalTotalLoan = document.getElementById('modalTotalLoanValue');
+
+            // Скрытые поля, которые уходят в заказ
+            const orderDown = document.getElementById('orderDownPayment');
+            const orderLoanTerm = document.getElementById('orderLoanTerm');
+            const orderInterest = document.getElementById('orderInterestRate');
+
+            const INTEREST_RATE = 11.5;
+
             function fmt(v) {
                 return Math.round(v).toLocaleString('ru-RU') + ' ₽';
             }
 
-            function recalc() {
+            function getCurrentTotal() {
                 let optionsTotal = 0;
                 optionRows.forEach(function (row) {
                     const cb = row.querySelector('input[type="checkbox"]');
-                    if (cb && cb.checked) {
-                        optionsTotal += parseFloat(row.dataset.price) || 0;
-                    }
+                    if (cb && cb.checked) optionsTotal += parseFloat(row.dataset.price) || 0;
                 });
-                const total = basePrice + optionsTotal;
+                return basePrice + optionsTotal;
+            }
+
+            // Пересчёт кредитного блока от текущей итоговой цены
+            function recalcCredit() {
+                if (!creditBlock) return;
+                const total = getCurrentTotal();
+                const down = parseFloat(modalDownRange.value) || 0;
+                const months = parseInt(modalPeriodRange.value) || 0;
+                const loanAmount = total - down;
+
+                modalDownRange.max = total;
+                modalDownValue.innerText = fmt(down);
+                modalPeriodValue.innerText = months + ' мес.';
+
+                let monthly = 0;
+                let totalLoan = 0;
+                if (loanAmount > 0 && months > 0) {
+                    const mr = INTEREST_RATE / 12 / 100;
+                    const coeff = (mr * Math.pow(1 + mr, months)) / (Math.pow(1 + mr, months) - 1);
+                    monthly = loanAmount * coeff;
+                    totalLoan = down + monthly * months;
+                }
+                modalMonthly.innerText = fmt(monthly);
+                modalTotalLoan.innerText = fmt(totalLoan);
+
+                // Синхронизируем скрытые поля со значениями из модалки
+                if (orderDown) orderDown.value = down;
+                if (orderLoanTerm) orderLoanTerm.value = months;
+                if (orderInterest) orderInterest.value = INTEREST_RATE;
+            }
+
+            function recalc() {
+                const total = getCurrentTotal();
+                const optionsTotal = total - basePrice;
                 if (optionsPriceEl) optionsPriceEl.innerText = fmt(optionsTotal);
                 if (totalPriceEl) totalPriceEl.innerText = fmt(total);
                 if (finalPriceInput) finalPriceInput.value = total;
+
+                // Обновляем цену кредитного калькулятора
+                if (window.creditCalculator) {
+                    window.creditCalculator.price = total;
+                }
+                recalcCredit();
             }
+
+            // Показ/скрытие кредитного блока при выборе способа оплаты
+            function toggleCreditBlock() {
+                if (!creditBlock) return;
+                if (paymentType && paymentType.value === 'credit') {
+                    creditBlock.classList.remove('d-none');
+                    recalcCredit();
+                } else {
+                    creditBlock.classList.add('d-none');
+                }
+            }
+
+            if (paymentType) paymentType.addEventListener('change', toggleCreditBlock);
+            if (modalDownRange) modalDownRange.addEventListener('input', recalcCredit);
+            if (modalPeriodRange) modalPeriodRange.addEventListener('input', recalcCredit);
 
             optionCheckboxes.forEach(function (cb) {
                 cb.addEventListener('change', recalc);
             });
+
+            toggleCreditBlock();
         });
     </script>
 @endsection

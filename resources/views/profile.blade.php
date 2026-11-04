@@ -67,6 +67,14 @@
                                                     @elseif($order->payment_type === 'card') Карта
                                                     @else Автокредит @endif
                                                 </small>
+                                                @if($order->payment_type === 'credit' && $order->creditApplication)
+                                                    <div class="text-muted mt-1" style="font-size: 0.75rem;">
+                                                        Взнос: <strong>{{ number_format($order->creditApplication->down_payment, 0, ',', ' ') }} ₽</strong> ·
+                                                        {{ $order->creditApplication->loan_term_months }} мес ·
+                                                        {{ number_format($order->creditApplication->interest_rate, 1, ',', ' ') }}% · платёж
+                                                        <strong>{{ number_format($order->creditApplication->monthly_payment, 0, ',', ' ') }} ₽/мес</strong>
+                                                    </div>
+                                                @endif
                                                 <div class="text-muted" style="font-size: 0.75rem;">от
                                                     {{ $order->created_at->format('d.m.Y в H:i') }}</div>
                                             </td>

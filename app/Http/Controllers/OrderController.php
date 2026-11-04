@@ -22,6 +22,14 @@ class OrderController extends Controller
             'options.*' => 'exists:options,id',
         ]);
 
+        if ($request->payment_type === 'credit') {
+            $request->validate([
+                'down_payment' => 'required|numeric|min:0',
+                'loan_term_months' => 'required|integer|min:1|max:120',
+                'interest_rate' => 'required|numeric|min:0|max:100',
+            ]);
+        }
+
         // 2. Находим автомобиль по ID
         $car = Car::with('options')->findOrFail($request->car_id);
 

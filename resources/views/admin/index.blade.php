@@ -45,6 +45,7 @@
                             <th>Тип оплаты</th>
                             <th>Статус оплаты</th>
                             <th>Статус сделки</th>
+                            <th class="text-center">Кредит</th>
                             <th class="text-center">Действие</th>
                         </tr>
                     </thead>
@@ -71,6 +72,22 @@
                                     @if($order->payment_type === 'cash') <span class="badge bg-secondary">Наличные</span>
                                     @elseif($order->payment_type === 'card') <span class="badge bg-secondary">Карта</span>
                                     @else <span class="badge bg-info text-dark">Автокредит</span> @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if($order->payment_type === 'credit' && $order->creditApplication)
+                                        <span class="badge bg-light text-primary border border-primary"
+                                            data-bs-toggle="tooltip" title="Ориентировочный ежемесячный платёж">
+                                            {{ number_format($order->creditApplication->monthly_payment, 0, ',', ' ') }} ₽/мес
+                                        </span>
+                                        <small class="d-block text-muted mt-1" style="font-size: 0.72rem;">
+                                            {{ number_format($order->creditApplication->down_payment, 0, ',', ' ') }} ₽ взнос ·
+                                            {{ $order->creditApplication->loan_term_months }} мес ·
+                                            {{ number_format($order->creditApplication->interest_rate, 1, ',', ' ') }}%
+                                        </small>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
                                 </td>
                                 <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
                                     @csrf

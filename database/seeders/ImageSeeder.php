@@ -9,8 +9,6 @@ use Illuminate\Database\Seeder;
 
 class ImageSeeder extends Seeder
 {
-    // Соответствие модели файлам картинок в storage/app/public/images/cars/
-    // (согласно ATTRIBUTION.txt). Ключи — имена моделей из BrandAndModelSeeder.
     protected array $modelImages = [
         'Lada Vesta' => [7],
         'Lada Granta' => [2],
