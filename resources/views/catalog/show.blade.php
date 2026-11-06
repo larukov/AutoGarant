@@ -306,12 +306,12 @@
                                         <div class="form-check d-flex justify-content-between align-items-center border rounded p-2 mb-1 option-row"
                                             data-price="{{ $option->price }}">
                                             <div>
-                                                <input class="form-check-input" type="checkbox" name="options[]"
-                                                    value="{{ $option->id }}" id="option{{ $option->id }}">
-                                                <label class="form-check-label small ms-1" for="option{{ $option->id }}">
-                                                    {{ $option->name }}
-                                                </label>
-                                            </div>
+                                            <x-ui.checkbox name="options[]" value="{{ $option->id }}"
+                                                id="option{{ $option->id }}" />
+                                            <label class="form-check-label small ms-1" for="option{{ $option->id }}">
+                                                {{ $option->name }}
+                                            </label>
+                                        </div>
                                             <span class="small text-muted" style="font-size: 0.8rem;">
                                                 {{ $option->price > 0 ? '+' . number_format($option->price, 0, ',', ' ') . ' ₽' : 'Включено' }}
                                             </span>
@@ -320,7 +320,7 @@
                                 </div>
                             @endif
 
-                            <!-- Скрытые поля для кредитного расчёта (заполняются из калькулятора) -->
+                            
                             <input type="hidden" name="down_payment" id="orderDownPayment" value="0">
                             <input type="hidden" name="loan_term_months" id="orderLoanTerm" value="36">
                             <input type="hidden" name="interest_rate" id="orderInterestRate" value="11.5">

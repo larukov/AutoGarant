@@ -16,8 +16,7 @@
                     <x-ui.input name="password" type="password" label="Пароль" required />
 
                     <div class="mb-3 form-check">
-                        <input type="checkbox" name="remember" class="form-check-input" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                        <x-ui.checkbox name="remember" id="rememberMe" label="Запомнить меня" />
                     </div>
 
                     <a href="#" class="text-center mb-2"

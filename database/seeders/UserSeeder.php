@@ -17,20 +17,12 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Ирина',
-                'email' => 'admin@auto.ru',
+                'email' => 'admin@autogarant.ru',
                 'password' => Hash::make('admin123'),
                 'tel' => '+79991112233',
                 'is_admin' => true,
                 'status' => true,
-            ],
-            [
-                'name' => 'Дмитрий',
-                'email' => 'client@auto.ru',
-                'password' => Hash::make('client123'),
-                'tel' => '+79994445566',
-                'is_admin' => false,
-                'status' => true,
-            ],
+            ]
         ];
 
         foreach ($users as $data) {

@@ -26,29 +26,28 @@
 <div class="row g-3">
     {{-- Марка и модель --}}
     <div class="col-12 col-md-6">
-        <x-ui.select name="brand_id" label="Марка автомобиля" id="brandSelect" :options="$brands->pluck('name', 'id')" :value="$selectedBrandId"
-            placeholder="Выберите марку" :required="true" class="form-select-sm" />
+        <x-ui.select name="brand_id" label="Марка автомобиля" id="brandSelect" :options="$brands->pluck('name', 'id')"
+            :value="$selectedBrandId" placeholder="Выберите марку" :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-6">
-        <x-ui.select name="model_id" label="Модель автомобиля" id="modelSelect" :options="$modelOptions" :value="$selectedModelId"
-            placeholder="Сначала выберите марку" :required="true" class="form-select-sm" />
+        <x-ui.select name="model_id" label="Модель автомобиля" id="modelSelect" :options="$modelOptions"
+            :value="$selectedModelId" placeholder="Сначала выберите марку" :required="true" class="form-select-sm" />
     </div>
 
     <div class="col-12 col-md-6">
-        <x-ui.select name="body_type_id" label="Тип кузова" :options="$bodyTypes->pluck('name', 'id')" :value="$car->body_type_id ?? ''" :required="true"
-            class="form-select-sm" />
+        <x-ui.select name="body_type_id" label="Тип кузова" :options="$bodyTypes->pluck('name', 'id')"
+            :value="$car->body_type_id ?? ''" :required="true" class="form-select-sm" />
     </div>
 
     <div class="col-6 col-md-3">
         <label class="form-label small fw-bold text-muted">Год выпуска</label>
-        <input type="number" name="year" min="1900" max="{{ date('Y') + 1 }}"
-            class="form-control form-control-sm" value="{{ old('year', $car->year ?? date('Y')) }}" required>
+        <input type="number" name="year" min="1900" max="{{ date('Y') + 1 }}" class="form-control form-control-sm"
+            value="{{ old('year', $car->year ?? date('Y')) }}" required>
     </div>
     <div class="col-6 col-md-3">
         <label class="form-label small fw-bold text-muted">Объем двигателя (л)</label>
-        <input type="number" name="engine_volume" min="0.1" max="99.9" step="0.1"
-            class="form-control form-control-sm" placeholder="2.0"
-            value="{{ old('engine_volume', $car->engine_volume ?? '') }}" required>
+        <input type="number" name="engine_volume" min="0.1" max="99.9" step="0.1" class="form-control form-control-sm"
+            placeholder="2.0" value="{{ old('engine_volume', $car->engine_volume ?? '') }}" required>
         <div class="form-text text-danger d-none" id="engineVolumeError" style="font-size: 0.7rem;">
             Допустимо от 0.1 до 99.9 л (не более двух знаков).
         </div>
@@ -62,28 +61,26 @@
 
     <div class="col-12 col-md-4">
         <x-ui.select name="transmission" label="Коробка передач" :options="[
-            'manual' => 'Механическая (МКПП)',
-            'automatic' => 'Автоматическая (АКПП)',
-            'robot' => 'Роботизированная',
-        ]" :value="$car->transmission ?? ''" :required="true"
-            class="form-select-sm" />
+        'manual' => 'Механическая (МКПП)',
+        'automatic' => 'Автоматическая (АКПП)',
+        'robot' => 'Роботизированная',
+    ]" :value="$car->transmission ?? ''"
+            :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-4">
         <x-ui.select name="drive_type" label="Привод" :options="[
-            'FWD' => 'Передний (FWD)',
-            'RWD' => 'Задний (RWD)',
-            'AWD' => 'Полный (AWD)',
-        ]" :value="$car->drive_type ?? ''" :required="true"
-            class="form-select-sm" />
+        'FWD' => 'Передний (FWD)',
+        'RWD' => 'Задний (RWD)',
+        'AWD' => 'Полный (AWD)',
+    ]" :value="$car->drive_type ?? ''" :required="true" class="form-select-sm" />
     </div>
     <div class="col-12 col-md-4">
         <x-ui.select name="fuel_type" label="Топливо" :options="[
-            'petrol' => 'Бензин',
-            'diesel' => 'Дизель',
-            'electric' => 'Электро',
-            'hybrid' => 'Гибрид',
-        ]" :value="$car->fuel_type ?? ''" :required="true"
-            class="form-select-sm" />
+        'petrol' => 'Бензин',
+        'diesel' => 'Дизель',
+        'electric' => 'Электро',
+        'hybrid' => 'Гибрид',
+    ]" :value="$car->fuel_type ?? ''" :required="true" class="form-select-sm" />
     </div>
 </div>
 
@@ -93,12 +90,12 @@
     @forelse($options as $option)
         <div class="col-12 col-md-6 col-lg-4">
             <div class="form-check border rounded p-2 px-3">
-                <input class="form-check-input" type="checkbox" name="options[]" value="{{ $option->id }}"
-                    id="option{{ $option->id }}"
-                    {{ in_array($option->id, (array) $selectedOptionIds) ? 'checked' : '' }}>
+                <x-ui.checkbox name="options[]" value="{{ $option->id }}" id="option{{ $option->id }}"
+                    :checked="in_array($option->id, (array) $selectedOptionIds)" />
                 <label class="form-check-label small w-100" for="option{{ $option->id }}">
                     {{ $option->name }}
-                    <span class="text-muted d-block" style="font-size: 0.75rem;">+ <x-money :money="$option->price" /></span>
+                    <span class="text-muted d-block" style="font-size: 0.75rem;">+ <x-money
+                            :money="$option->price" /></span>
                 </label>
             </div>
         </div>
@@ -166,11 +163,11 @@
     const engineInput = document.querySelector('[name="engine_volume"]');
     const engineError = document.getElementById('engineVolumeError');
     if (engineInput && engineError) {
-        engineInput.addEventListener('input', function() {
+        engineInput.addEventListener('input', function () {
             const val = parseFloat(this.value);
             const invalid = isNaN(val) || val < 0.1 || val > 99.9;
             engineError.classList.toggle('d-none', !invalid);
             this.classList.toggle('is-invalid', invalid);
         });
     }
-</script>
+</script> 
