@@ -30,6 +30,19 @@
                                 labelClass="form-label small fw-bold text-secondary" class="form-select-sm" />
                         </div>
 
+                        <!-- Фильтр по Модели (подчинён выбранной марке) -->
+                        <div class="mb-3">
+                            <label for="model" class="form-label small fw-bold text-secondary">Модель автомобиля</label>
+                            <select class="form-select form-select-sm" id="model" name="model_id">
+                                @foreach($models as $model)
+                                    <option value="{{ $model->id }}" data-brand="{{ $model->brand_id }}"
+                                        {{ request('model_id') == $model->id ? 'selected' : '' }}>
+                                        {{ $model->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <!-- Фильтр по Типу кузова -->
                         <div class="mb-3">
                             <x-ui.select name="body_type_id" label="Тип кузова" id="body_type" :options="$bodyTypes->pluck('name', 'id')"
@@ -95,4 +108,54 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const brandSelect = document.getElementById('brand');
+            const modelSelect = document.getElementById('model');
+            if (!brandSelect || !modelSelect) return;
+
+            // Начальная опция-подсказка
+            const promptOption = document.createElement('option');
+            promptOption.value = '';
+            promptOption.textContent = 'Сначала выберите марку';
+            promptOption.hidden = true;
+            modelSelect.insertBefore(promptOption, modelSelect.firstChild);
+
+            function filterModels() {
+                const selectedBrand = brandSelect.value;
+
+                if (!selectedBrand) {
+                    // Марка не выбрана — модель недоступна
+                    modelSelect.value = '';
+                    modelSelect.disabled = true;
+                    promptOption.hidden = false;
+                    Array.from(modelSelect.options).forEach(opt => {
+                        if (opt !== promptOption) opt.hidden = true;
+                    });
+                    return;
+                }
+
+                modelSelect.disabled = false;
+                promptOption.hidden = true;
+
+                let hasSelectedVisible = false;
+                Array.from(modelSelect.options).forEach(opt => {
+                    if (opt === promptOption) return;
+                    const show = opt.dataset.brand === selectedBrand;
+                    opt.hidden = !show;
+                    if (show && opt.selected) hasSelectedVisible = true;
+                });
+
+                if (!hasSelectedVisible) {
+                    modelSelect.value = '';
+                }
+            }
+
+            brandSelect.addEventListener('change', filterModels);
+            filterModels();
+        });
+    </script>
 @endsection

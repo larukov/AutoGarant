@@ -10,16 +10,16 @@ use Illuminate\Database\Seeder;
 class ImageSeeder extends Seeder
 {
     protected array $modelImages = [
-        'Lada Vesta' => [7],
-        'Lada Granta' => [2],
-        'Lada Niva Travel' => [8],
-        'Haval Jolion' => [9],
-        'Haval F7' => [5],
-        'Haval Dargo' => [5],
+        'Lada Vesta' => [7, 1],
+        'Lada Granta' => [2, 7],
+        'Lada Niva Travel' => [8, 2],
+        'Haval Jolion' => [9, 3],
+        'Haval F7' => [5, 6],
+        'Haval Dargo' => [5, 4],
         'Chery Tiggo 4 Pro' => [6, 11],
         'Chery Tiggo 7 Pro' => [4, 10],
-        'Geely Monjaro' => [3],
-        'Geely Coolray' => [1],
+        'Geely Monjaro' => [3, 8],
+        'Geely Coolray' => [1, 9],
     ];
 
     public function run(): void
@@ -60,7 +60,7 @@ class ImageSeeder extends Seeder
             }
         }
 
-        return [1];
+        return [1, 2];
     }
 
     protected function filename(int $number, Car $car): string

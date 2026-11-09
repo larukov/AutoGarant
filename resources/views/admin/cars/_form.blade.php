@@ -117,7 +117,7 @@
             <div class="col-4 col-md-3">
                 <div class="border rounded overflow-hidden position-relative">
                     <img src="{{ asset($image->image_url) }}" alt="{{ $image->name }}"
-                        style="width: 100%; height: 80px; object-fit: cover;">
+                        style="width: 100%; height: 180px; object-fit: cover;">
                     <form action="{{ route('admin.cars.images.destroy', $image->id) }}" method="POST"
                         onsubmit="return confirm('Удалить это изображение?');">
                         @csrf
