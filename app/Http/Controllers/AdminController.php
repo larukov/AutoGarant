@@ -22,9 +22,9 @@ class AdminController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // 2. Формирование финансового отчета по закрытым сделкам (статус 'closed' или аналогичный успешный)
-        $totalSales = Order::where('status', 'confirmed')->sum('final_price');
-        $closedDealsCount = Order::where('status', 'confirmed')->count();
+        // 2. Формирование финансового отчета по закрытым сделкам (статус 'closed')
+        $totalSales = Order::where('status', 'closed')->sum('final_price');
+        $closedDealsCount = Order::where('status', 'closed')->count();
 
         return view('admin.index', compact('orders', 'totalSales', 'closedDealsCount'));
     }
@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:created,confirmed,rejected', // Валидация под ваши ENUM
+            'status' => 'required|in:created,confirmed,prepaid,delivered,closed,rejected',
             'payment_status' => 'required|in:unpaid,10%,50%,fully_paid',
         ]);
 
@@ -41,11 +41,20 @@ class AdminController extends Controller
         $order->payment_status = $request->payment_status;
         $order->save();
 
-        // Бизнес-логика: если сделка отклонена менеджером, возвращаем авто статус "в наличии"
+        // Бизнес-логика: при отклонении сделки возвращаем авто в статус "в наличии"
         if ($request->status === 'rejected') {
             $car = Car::find($order->car_id);
             if ($car) {
                 $car->status = 'available';
+                $car->save();
+            }
+        }
+
+        // При закрытии сделки автомобиль считается проданным
+        if ($request->status === 'closed') {
+            $car = Car::find($order->car_id);
+            if ($car) {
+                $car->status = 'sold';
                 $car->save();
             }
         }

@@ -112,9 +112,12 @@
                                         <x-ui.select name="status" :options="[
                                             'created' => 'Заявка оформлена',
                                             'confirmed' => 'Договор подписан',
+                                            'prepaid' => 'Предоплата внесена',
+                                            'delivered' => 'Автомобиль выдан',
+                                            'closed' => 'Сделка закрыта',
                                             'rejected' => 'Сделка отклонена',
                                         ]" :value="$order->status" :use-old="false"
-                                            :class="'form-select-sm fw-semibold ' . ($order->status === 'confirmed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary'))" wrapperClass="mb-0" style="min-width: 160px;" />
+                                            :class="'form-select-sm fw-semibold ' . ($order->status === 'closed' ? 'text-success' : ($order->status === 'rejected' ? 'text-danger' : 'text-primary'))" wrapperClass="mb-0" style="min-width: 160px;" />
                                     </td>
 
                                     <!-- Кнопка сохранения изменений в строке -->

@@ -254,7 +254,7 @@
                             <!-- Наглядный блок расчёта автокредита в модалке -->
                             <div id="creditSummaryBlock" class="d-none border rounded-3 p-3 mb-3 bg-white">
                                 <h6 class="fw-bold text-dark mb-3">
-                                    <span class="me-1">🏦</span> Условия автокредита
+                                    Условия автокредита
                                 </h6>
 
                                 <div class="mb-3">

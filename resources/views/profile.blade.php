@@ -111,18 +111,25 @@
                                                 <span
                                                     class="badge py-2 px-3 fw-semibold
                                                             @if ($order->status === 'created') bg-light text-primary border border-primary
-                                                            @elseif($order->status === 'confirmed') bg-warning text-dark
+                                                            @elseif($order->status === 'confirmed') bg-info text-dark
+                                                            @elseif($order->status === 'prepaid') bg-warning text-dark
+                                                            @elseif($order->status === 'delivered') bg-primary text-white
+                                                            @elseif($order->status === 'closed') bg-success
                                                             @elseif($order->status === 'rejected') bg-danger
-                                                            @else bg-success @endif">
+                                                            @endif">
 
                                                     @if ($order->status === 'created')
                                                         Заявка оформлена
                                                     @elseif($order->status === 'confirmed')
                                                         Договор подписан
+                                                    @elseif($order->status === 'prepaid')
+                                                        Предоплата внесена
+                                                    @elseif($order->status === 'delivered')
+                                                        Автомобиль выдан
+                                                    @elseif($order->status === 'closed')
+                                                        Сделка закрыта
                                                     @elseif($order->status === 'rejected')
                                                         Сделка отклонена
-                                                    @else
-                                                        Сделка закрыта
                                                     @endif
                                                 </span>
                                             </td>
