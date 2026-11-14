@@ -111,27 +111,6 @@
     <div class="form-text small text-muted">Можно выбрать несколько изображений (JPG, PNG, WEBP, до 5 МБ каждое).</div>
 </div>
 
-@if ($car && $car->images->count() > 0)
-    <div class="row g-2 mt-2">
-        @foreach ($car->images as $image)
-            <div class="col-4 col-md-3">
-                <div class="border rounded overflow-hidden position-relative">
-                    <img src="{{ asset($image->image_url) }}" alt="{{ $image->name }}"
-                        style="width: 100%; height: 180px; object-fit: cover;">
-                    <form action="{{ route('admin.cars.images.destroy', $image->id) }}" method="POST"
-                        onsubmit="return confirm('Удалить это изображение?');">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="car_id" value="{{ $car->id }}">
-                        <button type="submit" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
-                            title="Удалить фото">✕</button>
-                    </form>
-                </div>
-            </div>
-        @endforeach
-    </div>
-@endif
-
 <div class="mt-4">
     <button type="submit" class="btn btn-success fw-bold px-4 py-2">
         {{ isset($car) ? 'Сохранить изменения' : 'Добавить автомобиль' }}
