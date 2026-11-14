@@ -53,7 +53,7 @@ class CarSeeder extends Seeder
             if (in_array($car->status, ['reserved', 'sold']) && $client) {
             $paymentStatus = $car->status === 'sold' ? 'fully_paid' : '50%'; 
             
-            $orderStatus = $car->status === 'sold' ? 'confirmed' : 'created';
+            $orderStatus = $car->status === 'sold' ? 'closed' : 'created';
 
             $order = Order::create([
                 'user_id' => $client->id,
